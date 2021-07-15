@@ -19,7 +19,7 @@ Position class >> notValidNumberOfSquare [
 	^ 'Number of square should be greater than zero'
 ]
 
-{ #category : #'instance creation api' }
+{ #category : #'instance creation' }
 Position class >> of: aPlayer at: numberOfSquare after: laps [
 	self validateNumberOf: laps and: numberOfSquare.
 	^ self new
@@ -28,7 +28,7 @@ Position class >> of: aPlayer at: numberOfSquare after: laps [
 		for: aPlayer
 ]
 
-{ #category : #'instance creation api' }
+{ #category : #'instance creation' }
 Position class >> validateNumberOf: lap and: numberOfSquare [
 	lap < 0
 		ifTrue: [ self error: 'Lap should be zero or greater' ].
