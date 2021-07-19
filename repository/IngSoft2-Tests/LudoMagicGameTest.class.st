@@ -15,9 +15,20 @@ Class {
 	#category : #'IngSoft2-Tests'
 }
 
+{ #category : #'exception tests' }
+LudoMagicGameTest >> assert: aBlockClosure throws: aMessage [
+	self
+		should: aBlockClosure
+		raise: Error
+		withExceptionDo: [ :error | 
+			self
+				assert: error messageText
+				equals: aMessage ]
+]
+
 { #category : #support }
-LudoMagicGameTest >> do: numberOfTurnsToDo theGame: aLudoMagicGame [ 
-	1 to: (numberOfTurnsToDo) do: [ :number | aLudoMagicGame turn ]
+LudoMagicGameTest >> do: numberOfTurnsToDo theGame: aGame [ 
+	1 to: (numberOfTurnsToDo) do: [ :number | aGame turn ]
 ]
 
 { #category : #running }
@@ -42,42 +53,25 @@ LudoMagicGameTest >> setUp [
 LudoMagicGameTest >> testAGameCannotHaveAWinnerIfItIsNotFinished [
 
 	self do: 2 theGame: anOneLapGame.
-	self should: [anOneLapGame winner] 
-		raise: Error
-		withExceptionDo: [ :error | self assert: error messageText equals: LudoMagicGame noWinnerErrorMessage ].
-
+	self assert: [anOneLapGame winner] throws: LudoMagicGame noWinnerErrorMessage
 ]
 
 { #category : #'exception tests' }
 LudoMagicGameTest >> testAGameCannotHaveAWinnerWhenItIsNew [
-
-	self
-		should: [anOneLapGame winner] 
-		raise: Error
-		withExceptionDo: [ :error | self assert: error messageText equals: LudoMagicGame noWinnerErrorMessage  ].
+	self assert: [anOneLapGame winner] throws: LudoMagicGame noWinnerErrorMessage
 			
 		
 ]
 
 { #category : #'exception tests' }
 LudoMagicGameTest >> testAGameCannotHaveNoDices [
-	self
-		should: [ LudoMagicGame playedBy: players withNumberOfLaps:3  throwing: {}  withSize: 6 ]
-		raise: Error
-		withExceptionDo: [ :error | self assert: error messageText equals: LudoMagicGame noDicesErrorMessage ].
-		
+	self assert: [ LudoMagicGame playedBy: players withNumberOfLaps:3  throwing: {}  withSize: 6 ] throws: LudoMagicGame noDicesErrorMessage
 ]
 
 { #category : #'exception tests' }
 LudoMagicGameTest >> testAGameCannotMakeARoundWhenItIsFinished [
-	
-
 	self do: 5 theGame: anOneLapGame .
-	
-	self
-		should: [ anOneLapGame turn]
-		raise: Error
-		withExceptionDo: [ :error | self assert: error messageText equals: LudoMagicGame noMoreRollsAllowedErrorMessage. ].
+	self assert: [ anOneLapGame turn ] throws: LudoMagicGame noMoreRollsAllowedErrorMessage
 ]
 
 { #category : #'main tests' }
@@ -143,10 +137,7 @@ LudoMagicGameTest >> testANewGameIsNotFinished [
 { #category : #'exception tests' }
 LudoMagicGameTest >> testAThreeLapGameCannotMakeAnotherRoundWhenItIsFinished [
 	self do: 4 theGame: aThreeLapGame .
-	self
-		should: [aThreeLapGame turn] 
-		raise: Error
-		withExceptionDo: [ :error | self assert: error messageText equals: LudoMagicGame noMoreRollsAllowedErrorMessage ].
+	self assert: [aThreeLapGame turn] throws: LudoMagicGame noMoreRollsAllowedErrorMessage
 ]
 
 { #category : #'card usage tests' }
@@ -183,13 +174,7 @@ LudoMagicGameTest >> testJorgeCannotThrowAnOverloadCardThatHeDoesNotHave [
 		andWithBoardOfSquares: squares
 		withDeckOf: (LoadedDeck withCards: {anOverloadCard}).
 	self do: 2 theGame: aGame.
-	self
-		should: [ aGame affect: julian using: SpeedCard new by: jorge ]
-		raise: Error
-		withExceptionDo: [ :error | 
-			self
-				assert: error messageText
-				equals: LudoMagicGame cardNotInHandErrorMessage ]
+	self assert: [ aGame affect: julian using: SpeedCard new by: jorge ] throws: LudoMagicGame cardNotInHandErrorMessage
 ]
 
 { #category : #'exception tests' }
@@ -210,13 +195,7 @@ LudoMagicGameTest >> testJorgeCannotThrowAnOverloadCardWhenItIsNotHisTurn [
 		andWithBoardOfSquares: squares
 		withDeckOf: (LoadedDeck withCards: {anOverloadCard}).
 	aGame turn.
-	self
-		should: [ aGame affect: julian using: anOverloadCard by: jorge ]
-		raise: Error
-		withExceptionDo: [ :error | 
-			self
-				assert: error messageText
-				equals: LudoMagicGame notCurrentTurnErrorMessage ]
+	self assert: [ aGame affect: julian using: anOverloadCard by: jorge ] throws: LudoMagicGame notCurrentTurnErrorMessage
 ]
 
 { #category : #'card usage tests' }
@@ -556,14 +535,7 @@ LudoMagicGameTest >> testJulianCannotCancelACardThatIsNotInTheGame [
 		andWithBoardOfSquares: squares
 		withDeckOf: (LoadedDeck withCards: {aCancellationCard}).
 	self do: 3 theGame: aGame.
-	self
-		should:
-			[ aGame affect: anOverloadCard using: aCancellationCard by: julian ]
-		raise: Error
-		withExceptionDo: [ :error | 
-			self
-				assert: error messageText
-				equals: CardHandler noCardMatchErrorMessage ]
+	self assert: [ aGame affect: anOverloadCard using: aCancellationCard by: julian ] throws: CardHandler noCardMatchErrorMessage
 ]
 
 { #category : #'exception tests' }
@@ -583,13 +555,8 @@ LudoMagicGameTest >> testJulianCannotThrowAReDoCardBecauseThereWasNoCardPlayedBe
 			(LoadedDice withValues: #(1 2))}
 		andWithBoardOfSquares: squares
 		withDeckOf: (LoadedDeck withCards: {aReDoCard}).
-	self
-		should: [ aGame affect: jorge using: aReDoCard by: jorge ]
-		raise: Error
-		withExceptionDo: [ :error | 
-			self
-				assert: error messageText
-				equals: LudoMagicGame noActiveCardsErrorMessage ]
+	
+	self assert: [ aGame affect: jorge using: aReDoCard by: jorge ] throws: LudoMagicGame noActiveCardsErrorMessage
 ]
 
 { #category : #'card usage tests' }
