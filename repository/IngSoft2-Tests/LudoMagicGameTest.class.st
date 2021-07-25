@@ -15,11 +15,6 @@ Class {
 	#category : #'IngSoft2-Tests'
 }
 
-{ #category : #support }
-LudoMagicGameTest >> do: numberOfTurnsToDo theGame: aGame [ 
-	1 to: (numberOfTurnsToDo) do: [ :number | aGame turn ]
-]
-
 { #category : #running }
 LudoMagicGameTest >> setUp [
 	| kindsOfCards |

@@ -4,62 +4,6 @@ Class {
 	#category : #'IngSoft2-Tests'
 }
 
-{ #category : #asserting }
-ProbabilisticDistributorTest >> assert: aProbabilisticDistributor generates: aGroupGeneratedByTheProbabilisticDistributor withMaxDifferenceBetweenThemOf: aTolerance [
-	
- | maxDifference realProportionsbyEvents events realProportionOfEvent realProportionOfAnotherEvent |
-	maxDifference := 0.
-	events := aProbabilisticDistributor events.
-	
-	realProportionsbyEvents := self getProportionsByEventFrom: aGroupGeneratedByTheProbabilisticDistributor with: events.
-	
-	
-	events do: [ 
-				:event | events do: [ 
-				:anotherEvent |        
-					realProportionOfEvent := realProportionsbyEvents at: event.
-					realProportionOfAnotherEvent := realProportionsbyEvents at: anotherEvent.
-					maxDifference := (maxDifference max: ((realProportionOfEvent-realProportionOfAnotherEvent) * 100) abs).
-				].    
-				
-				
-				].	
-
-		self assert: (maxDifference <= aTolerance)
-	
-	
-	
-
-]
-
-{ #category : #asserting }
-ProbabilisticDistributorTest >> assert: aProbabilisticDistributor generates: aGroupGeneratedByTheProbabilisticDistributor withTolerance: aTolerance [
-			
-	| realProportionsByEvent tolerances  |
-	realProportionsByEvent := self getProportionsByEventFrom: aGroupGeneratedByTheProbabilisticDistributor with: aProbabilisticDistributor events.
-	tolerances := aProbabilisticDistributor events collect: [ 
-				:event | ((realProportionsByEvent at: event ) - ((event probability ) )) abs * 100 ].
-	self assert: ( tolerances allSatisfy: [:tolerance | (tolerance <= aTolerance) ])
-	
-	
-	
-	
-
-
-]
-
-{ #category : #support }
-ProbabilisticDistributorTest >> getProportionsByEventFrom: groupGenerated with: events [
-	| proportionsByEvent realProportion |
-	proportionsByEvent := Dictionary new.
-	
-	events do: [ :event | 
-		realProportion :=  ((groupGenerated count: [ :item | item = event object ])/(groupGenerated size)).
-		proportionsByEvent at: event put: realProportion   .      ].
-	
-	^proportionsByEvent .
-]
-
 { #category : #'exception tests' }
 ProbabilisticDistributorTest >> testAProbabilisticDistributorCannotBeCreatedWithEmptyEvents [
 	self should: [ ProbabilisticDistributor with: {  } ]
