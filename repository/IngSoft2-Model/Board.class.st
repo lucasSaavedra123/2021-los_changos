@@ -29,11 +29,6 @@ Board class >> notValidNumberOfSquaresErrorMessage [
 	^ 'Size must be greater than 4'
 ]
 
-{ #category : #'error message' }
-Board class >> pickingCardErrorMessage [
-	^ 'Picking card is not allowed. Discard deck should not be empty.'
-]
-
 { #category : #'instance creation' }
 Board class >> playedBy: players with: squares andCardsFrom: deck finishingAfter: laps [
 	self validate: players withNumberOf: laps  andWith: squares. 
@@ -243,7 +238,7 @@ Board >> removeToAllPlayersPermanent: card [
 	validateIsNotEmpty: handlersWithCardToBeRemoved.
 	handlersWithCardToBeRemoved
 		do: [ :cardHandler | cardHandler removeEffectOf: card ].
-		lastCardPlayed := CancellationCard  new.
+
 ]
 
 { #category : #action }
@@ -261,11 +256,6 @@ Board >> size [
 { #category : #accessing }
 Board >> sortedPositions [
 	^ positions asSortedCollection: [ :playerA :playerB | playerA >= playerB ]
-]
-
-{ #category : #validation }
-Board >> validateCardPlay [
-	discardDeck isEmpty ifTrue: [ self error: self class pickingCardErrorMessage ]
 ]
 
 { #category : #action }
