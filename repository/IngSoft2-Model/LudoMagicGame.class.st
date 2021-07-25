@@ -105,11 +105,6 @@ LudoMagicGame >> has: aPlayer the: aCard [
 
 ]
 
-{ #category : #accesing }
-LudoMagicGame >> hasBeenPlayedACard [
-	^ board hasBeenPlayedACard
-]
-
 { #category : #initialization }
 LudoMagicGame >> initializePlayedBy: players withNumberOf: laps throwing: aGroupOfDices andWithBoardOf: squares with: aDeck [
 	nextPlayerIndex := 2.

@@ -126,11 +126,6 @@ Board >> has: aPlayer the: aCard [
 	^ playerCardHandler hasInHand: aCard
 ]
 
-{ #category : #accesing }
-Board >> hasBeenPlayedACard [
-	^ discardDeck isNotEmpty
-]
-
 { #category : #initialization }
 Board >> initializePlayedBy: aGroupOfPlayers withNumberOf: numberOfLaps with: aGroupOfSquares andCardsFrom: aDeck [
 	positions := aGroupOfPlayers

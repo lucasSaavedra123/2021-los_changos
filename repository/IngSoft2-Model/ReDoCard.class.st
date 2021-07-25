@@ -12,10 +12,3 @@ ReDoCard >> applyTo: aTarget in: aGame from: aPlayer [
 	aGame addInHand: newCard to: aPlayer.
 	aGame affect: aTarget using: newCard by: aPlayer
 ]
-
-{ #category : #action }
-ReDoCard >> validateIfIsPossibleToPlayReDoCardAt: aGame [
-	aGame hasBeenPlayedACard
-		ifFalse: [ self
-				error: 'This card cannot be played because there was no card played before' ]
-]
