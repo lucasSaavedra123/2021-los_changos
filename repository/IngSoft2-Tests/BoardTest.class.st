@@ -1,9 +1,6 @@
 Class {
 	#name : #BoardTest,
 	#superclass : #TestCase,
-	#instVars : [
-		'players'
-	],
 	#category : #'IngSoft2-Tests'
 }
 
@@ -17,7 +14,7 @@ BoardTest >> testABoardCannotBeCreatedWithDeckOfOneCard [
 					EffectlessSquare new.
 					EffectlessSquare new}
 				andCardsFrom: (Deck with: {Card new})
-				finishingAfter: 1 ] throws: Board deckSizeErrorMessage
+				finishingAfter: 1 ] throws: Board notValidDeckSizeErrorMessage
 ]
 
 { #category : #'exception tests' }

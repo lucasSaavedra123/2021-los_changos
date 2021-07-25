@@ -14,14 +14,14 @@ Class {
 	#category : #'IngSoft2-Model-Core'
 }
 
-{ #category : #'as yet unclassified' }
-Board class >> deckSizeErrorMessage [
-	^ 'Deck should be of size 4 or more'
-]
-
 { #category : #'error message' }
 Board class >> noActiveCardsErrorMessage [
 	^ 'This card cannot be played because there was no card played before'
+]
+
+{ #category : #'error message' }
+Board class >> notValidDeckSizeErrorMessage [
+	^ 'Deck should be of size 4 or more'
 ]
 
 { #category : #'error message' }
@@ -53,9 +53,9 @@ Board class >> validate: players withNumberOf: laps on: squares with: deck [.
 	self validateDeck: deck.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #validation }
 Board class >> validateDeck: aDeck [ 
-	aDeck size = 1 ifTrue: [ self error: self deckSizeErrorMessage ]
+	aDeck size = 1 ifTrue: [ self error: self notValidDeckSizeErrorMessage ]
 ]
 
 { #category : #validation }
@@ -109,6 +109,11 @@ Board >> cardHandlerOf: aPlayer [
 { #category : #accessing }
 Board >> deckSize [
 	^ deck size
+]
+
+{ #category : #accessing }
+Board >> discardDeckSize [
+	^ discardDeck size
 ]
 
 { #category : #initialization }
@@ -258,6 +263,7 @@ Board >> removeToAllPlayersPermanent: card [
 	validateIsNotEmpty: handlersWithCardToBeRemoved.
 	handlersWithCardToBeRemoved
 		do: [ :cardHandler | cardHandler removeEffectOf: card ].
+
 
 ]
 

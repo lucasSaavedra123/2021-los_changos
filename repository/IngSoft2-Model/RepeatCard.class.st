@@ -5,6 +5,11 @@ Class {
 }
 
 { #category : #action }
+RepeatCard >> applyTo: aTarget in: aGame [
+	aGame applyEffectOfTheLastPlayedSquareTo: aTarget from:self.
+]
+
+{ #category : #action }
 RepeatCard >> applyTo: aTarget in: aGame from: aPlayer [
 	aGame validateThrowOfAnInstantaneous: self from: aPlayer.
 	aGame applyEffectOfTheLastPlayedSquareTo: aTarget from:self.

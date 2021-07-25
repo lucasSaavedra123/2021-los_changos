@@ -87,6 +87,11 @@ LudoMagicGame >> affect: aTarget using: aCard by: aPlayer [
 ]
 
 { #category : #action }
+LudoMagicGame >> apply: aCard on: aTarget [
+	aCard applyTo: aTarget in: self
+]
+
+{ #category : #action }
 LudoMagicGame >> applyEffectOfTheLastPlayedSquareTo: aPlayer from:aCard [
 	board applyEffectOfTheLastPlayedSquareTo: aPlayer from:aCard.
 	
@@ -95,6 +100,11 @@ LudoMagicGame >> applyEffectOfTheLastPlayedSquareTo: aPlayer from:aCard [
 { #category : #accessing }
 LudoMagicGame >> deckSize [
 	^ board deckSize
+]
+
+{ #category : #accesing }
+LudoMagicGame >> discardDeckSize [
+	^ board discardDeckSize
 ]
 
 { #category : #boolean }

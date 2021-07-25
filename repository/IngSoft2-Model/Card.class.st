@@ -5,6 +5,11 @@ Class {
 }
 
 { #category : #action }
+Card >> applyTo: aTarget in: aGame [
+	
+]
+
+{ #category : #action }
 Card >> applyTo: aTarget in: aGame from: aPlayer [
 	self subclassResponsibility.
 ]

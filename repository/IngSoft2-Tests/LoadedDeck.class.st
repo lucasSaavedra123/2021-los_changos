@@ -2,8 +2,7 @@ Class {
 	#name : #LoadedDeck,
 	#superclass : #Object,
 	#instVars : [
-		'cards',
-		'nextCard'
+		'cards'
 	],
 	#category : #'IngSoft2-Tests'
 }
@@ -23,17 +22,17 @@ LoadedDeck class >> with: cards [
 	^self new initializeWith: cards.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 LoadedDeck >> initializeWith: aGroupOfCards [ 
 	cards := aGroupOfCards asOrderedCollection 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #boolean }
 LoadedDeck >> isEmpty [
 	^ cards isEmpty 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #action }
 LoadedDeck >> pick [
 	| cardToPick |
 	
@@ -42,7 +41,7 @@ LoadedDeck >> pick [
 	^ cardToPick
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 LoadedDeck >> size [
 	^ cards size
 ]

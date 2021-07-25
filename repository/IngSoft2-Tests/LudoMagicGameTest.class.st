@@ -128,7 +128,7 @@ LudoMagicGameTest >> testAThreeLapGameCannotMakeAnotherRoundWhenItIsFinished [
 	self assert: [aThreeLapGame turn] throws: LudoMagicGame noMoreRollsAllowedErrorMessage
 ]
 
-{ #category : #'function one' }
+{ #category : #'decks behavior' }
 LudoMagicGameTest >> testAllCardsWereGivenToEachPlayerAndDeckIsOne [
 	| aGame squares anOverloadCard |
 	anOverloadCard := OverloadCard new.
@@ -161,7 +161,7 @@ LudoMagicGameTest >> testAllCardsWereGivenToEachPlayerAndDeckIsOne [
 	self assert: (aGame deckSize) equals: 1.
 ]
 
-{ #category : #'function one' }
+{ #category : #'decks behavior' }
 LudoMagicGameTest >> testAllCardsWereGivenToEachPlayerAndNoMoreAreGivenUntilSomePlayerPlayAgainTheFirstCard [
 	| aGame squares anOverloadCard |
 	anOverloadCard := OverloadCard new.
@@ -211,7 +211,7 @@ LudoMagicGameTest >> testJorgeAndJulianGotDifferentsCards [
 	self assert: (aGame has: julian the: anotherCard)
 ]
 
-{ #category : #'function one' }
+{ #category : #'decks behavior' }
 LudoMagicGameTest >> testJorgeArriveBAndCardDeliveryIsDoneOnceHePlayACard [
 	| aGame squares anOverloadCard |
 	anOverloadCard := OverloadCard new.
@@ -562,7 +562,7 @@ LudoMagicGameTest >> testJorgeWinsAThreeLapGame [
 	self assert: (aThreeLapGame lapOf: julian) equals: 3.
 ]
 
-{ #category : #'function one' }
+{ #category : #'decks behavior' }
 LudoMagicGameTest >> testJulianArriveToDeliverySquareButNotGetCardWithoutCardsPlayed [
 	| aGame squares anOverloadCard |
 	anOverloadCard := OverloadCard new.
@@ -754,6 +754,37 @@ LudoMagicGameTest >> testJulianGetsACancellationCardAndGetsRidOfSpeedCard [
 	self assert: (aGame numberOfSquareOf: jorge) equals: 5
 ]
 
+{ #category : #'decks behavior' }
+LudoMagicGameTest >> testJulianGetsACancellationCardAndGetsRidOfSpeedCardAndDeckSizeIncrease [
+	| aGame squares aCancellationCard aSpeedCard |
+	aCancellationCard := CancellationCard new.
+	aSpeedCard := SpeedCard new.
+	squares := {EffectlessSquare new.
+	EffectlessSquare new.
+	EffectlessSquare new.
+	EffectlessSquare new.
+	EffectlessSquare new}.
+	aGame := LudoMagicGame
+		playedBy: players
+		withNumberOfLaps: 2
+		throwing:
+			{(LoadedDice withValues: #(1 2)).
+			(LoadedDice withValues: #(1 2))}
+		andWithBoardOf: squares
+		and:
+			(LoadedDeck
+				with:
+					{aSpeedCard.
+					aCancellationCard . aSpeedCard.
+					aCancellationCard . aSpeedCard.
+					aCancellationCard}).
+	self do: 2 theGame: aGame.
+	aGame affect: julian using: aSpeedCard by: jorge.
+	aGame turn.
+	aGame affect: aSpeedCard using: aCancellationCard by: julian.
+	self assert: aGame discardDeckSize equals: 2.
+]
+
 { #category : #'card usage tests' }
 LudoMagicGameTest >> testJulianGetsAReDoCardAfterJorgeThrewAnAccelerationCardAndPlaysIt [
 	| aGame squares aReDoCard anAccelerationCard |
@@ -827,7 +858,7 @@ LudoMagicGameTest >> testJulianGetsAReDoCardAfterJorgeThrewAnCancellationCardAnd
 	self assert: (aGame numberOfSquareOf: jorge) equals: 5.
 ]
 
-{ #category : #'function one' }
+{ #category : #'decks behavior' }
 LudoMagicGameTest >> testJulianGetsAReDoCardAfterJorgeThrewAnCancellationCardAndPlaysIt2 [
 	| aGame squares aReDoCard aCancellationCard anOverloadCard aSpeedCard |
 	aReDoCard := ReDoCard new.
@@ -835,14 +866,14 @@ LudoMagicGameTest >> testJulianGetsAReDoCardAfterJorgeThrewAnCancellationCardAnd
 	anOverloadCard := OverloadCard new.
 	aSpeedCard:= SpeedCard new.
 	squares := {
-		EffectlessSquare new.
-		EffectlessSquare new.
+		DeliveryCardSquare new.
+		DeliveryCardSquare new.
 		DeliveryCardSquare new.
 		DeliveryCardSquare new.
 		DeliveryCardSquare new}.
 	aGame := LudoMagicGame
 		playedBy: players
-		withNumberOfLaps: 4
+		withNumberOfLaps: 20
 		throwing:
 			{(LoadedDice withValues: #(1 2)).
 			(LoadedDice withValues: #(1 2))}
@@ -860,10 +891,8 @@ LudoMagicGameTest >> testJulianGetsAReDoCardAfterJorgeThrewAnCancellationCardAnd
 	aGame affect:aSpeedCard   using:aCancellationCard   by:jorge.
 	aGame turn.
 	aGame affect:anOverloadCard  using:aReDoCard  by: julian.  
-	aGame turn. 
-	 
-	self assert: (aGame numberOfSquareOf: julian) equals: 2.
-	self assert: (aGame numberOfSquareOf: jorge) equals: 5.
+	self do: 10 theGame: aGame.
+	self assert: (aGame deckSize) equals: 4.
 ]
 
 { #category : #'card usage tests' }

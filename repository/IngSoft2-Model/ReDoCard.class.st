@@ -6,9 +6,8 @@ Class {
 
 { #category : #action }
 ReDoCard >> applyTo: aTarget in: aGame from: aPlayer [
-	| newCard |
-	newCard := aGame lastCardPlayed.
+	| lastCard |
+	lastCard := aGame lastCardPlayed.
 	aGame validate: aPlayer has: self.
-	aGame addInHand: newCard to: aPlayer.
-	aGame affect: aTarget using: newCard by: aPlayer
+	aGame apply: lastCard on: aTarget
 ]

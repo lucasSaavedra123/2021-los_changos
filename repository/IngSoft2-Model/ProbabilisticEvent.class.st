@@ -8,12 +8,12 @@ Class {
 	#category : #'IngSoft2-Model-Utilities'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'error message' }
 ProbabilisticEvent class >> notValidProbabilityMessage [
 	^ 'Probability should be between 0 and 1'
 ]
 
-{ #category : #'instance creation' }
+{ #category : #validation }
 ProbabilisticEvent class >> validateIsInRange: aProbability [
 	(aProbability between: 0 and: 1)
 		ifFalse: [ self error: self notValidProbabilityMessage ]

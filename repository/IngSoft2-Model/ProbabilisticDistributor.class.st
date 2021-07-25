@@ -8,12 +8,12 @@ Class {
 	#category : #'IngSoft2-Model-Utilities'
 }
 
-{ #category : #'instance creation' }
+{ #category : #'error message' }
 ProbabilisticDistributor class >> notValidGroupOfEventsMessage [
 	^ 'The sum of events probabilities must be 1'
 ]
 
-{ #category : #'instance creation' }
+{ #category : #validation }
 ProbabilisticDistributor class >> validate: events [
 	| sumOfProbabilities |
 	events isEmpty

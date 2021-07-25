@@ -7,7 +7,7 @@ Class {
 	#category : #'IngSoft2-Model-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'error message' }
 Deck class >> noMoreCardsToPickErrorMessage [
 	^ 'No cards to pick'
 ]

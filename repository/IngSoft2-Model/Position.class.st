@@ -28,7 +28,7 @@ Position class >> of: aPlayer at: numberOfSquare after: laps [
 		for: aPlayer
 ]
 
-{ #category : #'instance creation' }
+{ #category : #validation }
 Position class >> validateNumberOf: lap and: numberOfSquare [
 	lap < 0
 		ifTrue: [ self error: 'Lap should be zero or greater' ].

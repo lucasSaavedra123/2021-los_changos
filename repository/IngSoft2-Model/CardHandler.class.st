@@ -9,7 +9,7 @@ Class {
 	#category : #'IngSoft2-Model-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : #'error message' }
 CardHandler class >> noCardMatchErrorMessage [
 	^ 'This card cannot be played because there are not active cards that match'
 ]

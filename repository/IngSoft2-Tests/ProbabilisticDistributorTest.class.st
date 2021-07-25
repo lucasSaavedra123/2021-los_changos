@@ -6,9 +6,9 @@ Class {
 
 { #category : #'exception tests' }
 ProbabilisticDistributorTest >> testAProbabilisticDistributorCannotBeCreatedWithEmptyEvents [
-	self should: [ ProbabilisticDistributor with: {  } ]
-		raise: Error
-		withExceptionDo: [ :error | self assert: error messageText equals: ProbabilisticDistributor notValidGroupOfEventsMessage ].
+	
+	self assert: [ ProbabilisticDistributor with: {  } ] throws: ProbabilisticDistributor notValidGroupOfEventsMessage
+	
 ]
 
 { #category : #tests }
@@ -24,48 +24,37 @@ ProbabilisticDistributorTest >> testAProbabilisticDistributorGenerateAGroupOfObj
 
 { #category : #'exception tests' }
 ProbabilisticDistributorTest >> testAProbabilisticEventCannotBeCreatedWithProbabilityGreaterThanOne [
-	self
-		should: [ ProbabilisticEvent with: 1.1 for: Object ]
-		raise: Error
-		withExceptionDo: [ :error | self assert: error messageText equals: ProbabilisticEvent notValidProbabilityMessage ].
+
+	self assert: [ ProbabilisticEvent with: 1.1 for: Object ] throws: ProbabilisticEvent notValidProbabilityMessage
 ]
 
 { #category : #'exception tests' }
 ProbabilisticDistributorTest >> testAProbabilisticEventCannotBeCreatedWithProbabilityLowerThanZero [
-	self
-		should: [ ProbabilisticEvent with: -2 for: Object ]
-		raise: Error
-		withExceptionDo: [ :error | self assert: error messageText equals: ProbabilisticEvent notValidProbabilityMessage ].
+	
+	self assert: [ ProbabilisticEvent with: -2 for: Object ] throws: ProbabilisticEvent notValidProbabilityMessage
 ]
 
 { #category : #'exception tests' }
 ProbabilisticDistributorTest >> testAProbabiliticDistributorCannotHaveEventsWithAllEventsInOne [
 	| events |
 	events := { ProbabilisticEvent with: 1 for: 6 . ProbabilisticEvent with: 1 for: 10 }.
-																		
-	self should: [ ProbabilisticDistributor with: events ]
-		raise: Error
-		withExceptionDo: [ :error | self assert: error messageText equals: ProbabilisticDistributor notValidGroupOfEventsMessage ].
+	
+	self assert: [ ProbabilisticDistributor with: events ] throws: ProbabilisticDistributor notValidGroupOfEventsMessage
 ]
 
 { #category : #'exception tests' }
 ProbabilisticDistributorTest >> testAProbabiliticDistributorCannotHaveEventsWithAllEventsInZero [
 	| events |
 	events := { ProbabilisticEvent with: 0 for: 6 . ProbabilisticEvent with: 0 for: 10 }.
-																		
-	self should: [ ProbabilisticDistributor with: events ]
-		raise: Error
-		withExceptionDo: [ :error | self assert: error messageText equals: ProbabilisticDistributor notValidGroupOfEventsMessage ].
+	
+	self assert: [ ProbabilisticDistributor with: events ] throws: ProbabilisticDistributor notValidGroupOfEventsMessage
 ]
 
 { #category : #'exception tests' }
 ProbabilisticDistributorTest >> testAProbabiliticDistributorCannotHaveSumOfEventsProbabilitiesNotEqualToOne [
 	| events |
 	events := { ProbabilisticEvent with: 0.1 for: 6 . ProbabilisticEvent with: 0.4 for: 10 }.
-																		
-	self should: [ ProbabilisticDistributor with: events ]
-		raise: Error
-		withExceptionDo: [ :error | self assert: error messageText equals: ProbabilisticDistributor notValidGroupOfEventsMessage ].
+	self assert: 	[ ProbabilisticDistributor with: events ] throws: ProbabilisticDistributor notValidGroupOfEventsMessage	
 ]
 
 { #category : #tests }
@@ -173,4 +162,9 @@ ProbabilisticDistributorTest >> testAProbabiliticDistributorWithTwoEventsWithZer
 		ProbabilisticEvent with: 0 for: 'someItem'
 	}.
 	self assert: aProbabilisticDistributor generates: (aProbabilisticDistributor generate: 89) withTolerance: 0.
+]
+
+{ #category : #tests }
+ProbabilisticDistributorTest >> testARealIntervalCannotBeCreatedWithMinorLimitGreaterThanMajorLimit [
+	self assert: [ RealInterval from: 5 to: 2 ] throws: (RealInterval notValidLimitsErrorMessageFrom: 5 to: 2) 
 ]
