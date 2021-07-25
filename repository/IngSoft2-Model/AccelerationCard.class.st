@@ -8,6 +8,7 @@ Class {
 AccelerationCard >> applyTo: aTarget in: aGame from: aPlayer [
 	aGame validateThrowOfAPermanent: self  from: aPlayer.
 	aGame addToAllEffectOf:self.
+
 ]
 
 { #category : #accesing }

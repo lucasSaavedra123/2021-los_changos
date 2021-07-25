@@ -8,8 +8,8 @@ Class {
 		'squares',
 		'cardHandlers',
 		'deck',
-		'lastCardPlayed',
-		'lastSquarePlayed'
+		'lastSquarePlayed',
+		'discardDeck'
 	],
 	#category : #'IngSoft2-Model-Core'
 }
@@ -27,6 +27,11 @@ Board class >> notValidNumberOfPlayersErrorMessage [
 { #category : #'instance creation' }
 Board class >> notValidNumberOfSquaresErrorMessage [
 	^ 'Size must be greater than 4'
+]
+
+{ #category : #'error message' }
+Board class >> pickingCardErrorMessage [
+	^ 'Picking card is not allowed. Discard deck should not be empty.'
 ]
 
 { #category : #'instance creation' }
@@ -63,7 +68,6 @@ Board class >> validateSquares: squares [
 { #category : #action }
 Board >> addEffectOf: aCard to: aPlayer [
 	(self cardHandlerOf: aPlayer) addEffectOf: aCard.
-	lastCardPlayed:= aCard.
 ]
 
 { #category : #action }
@@ -80,7 +84,7 @@ Board >> addToAllEffectOf: aCard [
 { #category : #action }
 Board >> applyEffectOfTheLastPlayedSquareTo: aPlayer from: aCard [
 	lastSquarePlayed makeEffectOn: aPlayer thatHasItsPositionIn: self.
-	lastCardPlayed:= aCard.
+
 ]
 
 { #category : #boolean }
@@ -109,8 +113,10 @@ Board >> finished: aPlayer [
 
 { #category : #action }
 Board >> giveCardFromDeckTo: aPlayer [ 
-	(self cardHandlerOf: aPlayer) addToHand: (deck pick).
-	
+	discardDeck isEmpty ifFalse:[
+		(self cardHandlerOf: aPlayer) addToHand: (deck pick)
+	].
+
 ]
 
 { #category : #boolean }
@@ -118,6 +124,11 @@ Board >> has: aPlayer the: aCard [
 	| playerCardHandler |
 	playerCardHandler := self cardHandlerOf: aPlayer.
 	^ playerCardHandler hasInHand: aCard
+]
+
+{ #category : #accesing }
+Board >> hasBeenPlayedACard [
+	^ discardDeck isNotEmpty
 ]
 
 { #category : #initialization }
@@ -129,9 +140,9 @@ Board >> initializePlayedBy: aGroupOfPlayers withNumberOf: numberOfLaps with: aG
 	self distributeCardsFrom: aDeck.
 	squares := aGroupOfSquares.
 	laps := numberOfLaps.
+	discardDeck := OrderedCollection new.
 	players := aGroupOfPlayers.
 	deck := aDeck.
-	lastCardPlayed := nil.
 	lastSquarePlayed := EffectlessSquare new.
 ]
 
@@ -142,7 +153,8 @@ Board >> lapOf: aPlayer [
 
 { #category : #accessing }
 Board >> lastCardPlayed [
-	^lastCardPlayed.
+	^ discardDeck last.
+
 ]
 
 { #category : #accessing }
@@ -219,6 +231,7 @@ Board >> positionOf: aPlayer [
 { #category : #action }
 Board >> removeFromHand: aCard to: aPlayer [
 	(self cardHandlerOf: aPlayer) removeFromHand: aCard.
+	discardDeck add: aCard
 ]
 
 { #category : #action }
@@ -248,6 +261,11 @@ Board >> size [
 { #category : #accessing }
 Board >> sortedPositions [
 	^ positions asSortedCollection: [ :playerA :playerB | playerA >= playerB ]
+]
+
+{ #category : #validation }
+Board >> validateCardPlay [
+	discardDeck isEmpty ifTrue: [ self error: self class pickingCardErrorMessage ]
 ]
 
 { #category : #action }
