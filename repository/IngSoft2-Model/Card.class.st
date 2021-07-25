@@ -6,7 +6,7 @@ Class {
 
 { #category : #action }
 Card >> applyTo: aTarget in: aGame [
-	
+	self subclassResponsibility.
 ]
 
 { #category : #action }

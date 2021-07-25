@@ -68,11 +68,6 @@ LudoMagicGame >> addEffectOf: aCard to: aPlayer [
 ]
 
 { #category : #action }
-LudoMagicGame >> addInHand: aCard to: aPlayer [
-	board addInHand: aCard to: aPlayer.
-]
-
-{ #category : #action }
 LudoMagicGame >> addToAllEffectOf: aCard [
 	board addToAllEffectOf:aCard.
 	

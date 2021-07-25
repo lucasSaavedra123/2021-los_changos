@@ -82,11 +82,6 @@ Board >> addEffectOf: aCard to: aPlayer [
 ]
 
 { #category : #action }
-Board >> addInHand: aCard to: aPlayer [
-	(self cardHandlerOf: aPlayer) addToHand: aCard.
-]
-
-{ #category : #action }
 Board >> addToAllEffectOf: aCard [ 
 	players do:[:player | self addEffectOf: aCard to:player].
 	
