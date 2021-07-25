@@ -8,6 +8,19 @@ Class {
 }
 
 { #category : #'exception tests' }
+BoardTest >> testABoardCannotBeCreatedWithDeckOfOneCard [
+	self assert: [ Board
+				playedBy: {'jorge' . 'julian'}
+				with: {EffectlessSquare new.
+					EffectlessSquare new.
+					EffectlessSquare new.
+					EffectlessSquare new.
+					EffectlessSquare new}
+				andCardsFrom: (Deck with: {Card new})
+				finishingAfter: 1 ] throws: Board deckSizeErrorMessage
+]
+
+{ #category : #'exception tests' }
 BoardTest >> testABoardCannotBeCreatedWithFourSquaresize [
 	self
 		should: [ Board
@@ -47,7 +60,7 @@ BoardTest >> testABoardCannotBeCreatedWithNumberOfLapsNegative [
 { #category : #'exception tests' }
 BoardTest >> testABoardCannotBeCreatedWithNumberOfLapsZero [
 	self
-		should: [ Board
+		assert: [ Board
 				playedBy: {'jorge' . 'julian'}
 				with:
 					{EffectlessSquare new.
@@ -56,18 +69,13 @@ BoardTest >> testABoardCannotBeCreatedWithNumberOfLapsZero [
 					EffectlessSquare new.
 					EffectlessSquare new}
 				andCardsFrom: (Deck with: {Card new})
-				finishingAfter: 0 ]
-		raise: Error
-		withExceptionDo: [ :error | 
-			self
-				assert: error messageText
-				equals: 'Number of laps must be greater than 0' ]
+				finishingAfter: 0 ] throws: 'Number of laps must be greater than 0'
 ]
 
 { #category : #'exception tests' }
 BoardTest >> testABoardCannotBeCreatedWithOnePlayers [
 	self
-		should: [ Board
+		assert: [ Board
 				playedBy: {'jorge'}
 				with:
 					{EffectlessSquare new.
@@ -76,18 +84,13 @@ BoardTest >> testABoardCannotBeCreatedWithOnePlayers [
 					EffectlessSquare new.
 					EffectlessSquare new}
 				andCardsFrom: (Deck with: {Card new})
-				finishingAfter: 0 ]
-		raise: Error
-		withExceptionDo: [ :error | 
-			self
-				assert: error messageText
-				equals: 'There must be 2 or more players' ]
+				finishingAfter: 0 ] throws: 'There must be 2 or more players'
 ]
 
 { #category : #'exception tests' }
 BoardTest >> testABoardCannotBeCreatedWithZeroPlayers [
 	self
-		should: [ Board
+		assert: [ Board
 				playedBy: {}
 				with:
 					{EffectlessSquare new.
@@ -97,22 +100,15 @@ BoardTest >> testABoardCannotBeCreatedWithZeroPlayers [
 					EffectlessSquare new}
 				andCardsFrom: (Deck with: {Card new})
 				finishingAfter: 0 ]
-		raise: Error
-		withExceptionDo: [ :error | 
-			self
-				assert: error messageText
-				equals: 'There must be 2 or more players' ]
+		throws: 'There must be 2 or more players'
 ]
 
 { #category : #'exception tests' }
 BoardTest >> testABoardCannotBeCreatedWithoutSquares [
 	self
-		should: [ Board
+		assert: [ Board
 				playedBy: {'jorge' . 'julian'}
 				with: {}
 				andCardsFrom: (Deck with: {Card new})
-				finishingAfter: 1 ]
-		raise: Error
-		withExceptionDo:
-			[ :error | self assert: error messageText equals: 'Size must be greater than 4' ]
+				finishingAfter: 1 ] throws: 'Size must be greater than 4'
 ]

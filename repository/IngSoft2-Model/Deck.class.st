@@ -7,6 +7,11 @@ Class {
 	#category : #'IngSoft2-Model-Core'
 }
 
+{ #category : #'as yet unclassified' }
+Deck class >> noMoreCardsToPickErrorMessage [
+	^ 'No cards to pick'
+]
+
 { #category : #'instance creation' }
 Deck class >> notValidSizeOfCardsErrorMessage [
 	^ 'It needs one or more cards'
@@ -22,12 +27,24 @@ Deck class >> with: cards [
 
 { #category : #initialization }
 Deck >> initializeWith: aGroupOfCards [
-	cards := aGroupOfCards.
+	cards := aGroupOfCards asOrderedCollection shuffled.
+]
+
+{ #category : #accesing }
+Deck >> isEmpty [
+	^ cards isEmpty 
 ]
 
 { #category : #actions }
 Deck >> pick [
 	| cardToPick |
-	cardToPick := cards at: (Random new nextInt: (cards size)).
-	^ cardToPick copy
+	
+	cardToPick := cards at: 1 ifAbsent: [ self error: self class noMoreCardsToPickErrorMessage ].
+	cards remove: cardToPick.
+	^ cardToPick
+]
+
+{ #category : #actions }
+Deck >> size [
+	^ cards size
 ]

@@ -37,17 +37,17 @@ LudoMagicGame class >> notCurrentTurnErrorMessage [
 ]
 
 { #category : #'instance creation' }
-LudoMagicGame class >> playedBy: players withNumberOfLaps: laps throwing: dices andWithBoardOfSquares: squares withDeckOf: aDeck [
+LudoMagicGame class >> playedBy: players withNumberOfLaps: laps throwing: dices andWithBoardOf: squares and: deck [
 	
 	dices isEmpty ifTrue: [ self error: self noDicesErrorMessage ].
 
-	^self new initializePlayedBy: players withNumberOf: laps throwing: dices andWithBoardOf: squares with: aDeck.
+	^self new initializePlayedBy: players withNumberOf: laps throwing: dices andWithBoardOf: squares with: deck.
 ]
 
 { #category : #'instance creation' }
-LudoMagicGame class >> playedBy: players withNumberOfLaps: laps throwing: dices withSize: size [
+LudoMagicGame class >> playedBy: players withNumberOfLaps: laps throwing: dices withBoardOf: size and: deck [
 
-		| squares aDeck |
+		| squares |
 		
 	squares := (ProbabilisticDistributor with: { 
 		ProbabilisticEvent with: 0.38 for: EffectlessSquare new .
@@ -57,10 +57,8 @@ LudoMagicGame class >> playedBy: players withNumberOfLaps: laps throwing: dices 
 		ProbabilisticEvent with: 0.02 for: AtomicBombSquare new .
 		ProbabilisticEvent with: 0.10 for: DeliveryCardSquare new .
 	}) generate: size.
-	
-	aDeck := Deck with: (Card subclasses collect: [ :aKindOfCard | aKindOfCard new ]).
 		
-	^self playedBy: players withNumberOfLaps: laps throwing: dices andWithBoardOfSquares: squares withDeckOf: aDeck.
+	^self playedBy: players withNumberOfLaps: laps throwing: dices andWithBoardOf: squares and: deck.
 ]
 
 { #category : #action }
@@ -92,6 +90,11 @@ LudoMagicGame >> affect: aTarget using: aCard by: aPlayer [
 LudoMagicGame >> applyEffectOfTheLastPlayedSquareTo: aPlayer from:aCard [
 	board applyEffectOfTheLastPlayedSquareTo: aPlayer from:aCard.
 	
+]
+
+{ #category : #'as yet unclassified' }
+LudoMagicGame >> deckSize [
+	^ board deckSize
 ]
 
 { #category : #accessing }
@@ -153,7 +156,7 @@ LudoMagicGame >> quantityOfCardsInHandOf: aPlayer [
 
 { #category : #action }
 LudoMagicGame >> removeFromHand: aCard of: aPlayer [ 
-	board removeFromHand: aCard to: aPlayer
+	board removeFromHand: aCard to: aPlayer.
 ]
 
 { #category : #action }

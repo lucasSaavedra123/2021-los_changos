@@ -13,6 +13,18 @@ DeckTest >> testADeckCannotBeCreatedWithoutCards [
 ]
 
 { #category : #tests }
+DeckTest >> testADeckCannotThrowCardWhenItHasNoCards [
+	| aDeck |
+	aDeck := Deck
+		with: { OverloadCard new . SpeedCard new . CancellationCard . }.
+	aDeck 	pick;
+					pick;
+					pick.
+
+	self assert: [ aDeck pick ] throws: Deck noMoreCardsToPickErrorMessage
+]
+
+{ #category : #tests }
 DeckTest >> testADeckDontRepeatCard [
 	| aDeck |
 	aDeck := Deck

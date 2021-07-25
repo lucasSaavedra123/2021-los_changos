@@ -15,51 +15,62 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+Board class >> deckSizeErrorMessage [
+	^ 'Deck should be of size 4 or more'
+]
+
+{ #category : #'error message' }
 Board class >> noActiveCardsErrorMessage [
 	^ 'This card cannot be played because there was no card played before'
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'error message' }
 Board class >> notValidNumberOfLapsErrorMessage [
 	^ 'Number of laps must be greater than 0'
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'error message' }
 Board class >> notValidNumberOfPlayersErrorMessage [
 	^ 'There must be 2 or more players'
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'error message' }
 Board class >> notValidNumberOfSquaresErrorMessage [
 	^ 'Size must be greater than 4'
 ]
 
 { #category : #'instance creation' }
 Board class >> playedBy: players with: squares andCardsFrom: deck finishingAfter: laps [
-	self validate: players withNumberOf: laps  andWith: squares. 
+	self validate: players withNumberOf: laps  on: squares with: deck.
 	^self new initializePlayedBy: players withNumberOf: laps with: squares andCardsFrom: deck.
 ]
 
-{ #category : #'instance creation' }
-Board class >> validate: players withNumberOf: laps andWith: squares [
+{ #category : #validation }
+Board class >> validate: players withNumberOf: laps on: squares with: deck [.
 	self validatePlayers: players.
 	self validateLaps: laps.
-	self validateSquares: squares
+	self validateSquares: squares.
+	self validateDeck: deck.
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'as yet unclassified' }
+Board class >> validateDeck: aDeck [ 
+	aDeck size = 1 ifTrue: [ self error: self deckSizeErrorMessage ]
+]
+
+{ #category : #validation }
 Board class >> validateLaps: laps [
 	laps < 1
 		ifTrue: [ self error: self notValidNumberOfLapsErrorMessage ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : #validation }
 Board class >> validatePlayers: players [
 	players size <= 1
 		ifTrue: [ self error: self notValidNumberOfPlayersErrorMessage ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : #validation }
 Board class >> validateSquares: squares [
 	squares size <= 4
 		ifTrue: [ self error: self notValidNumberOfSquaresErrorMessage ]
@@ -95,6 +106,11 @@ Board >> cardHandlerOf: aPlayer [
 	^ playerCardHandler
 ]
 
+{ #category : #accessing }
+Board >> deckSize [
+	^ deck size
+]
+
 { #category : #initialization }
 Board >> distributeCardsFrom: aDeck [
 	cardHandlers
@@ -112,11 +128,15 @@ Board >> finished: aPlayer [
 ]
 
 { #category : #action }
-Board >> giveCardFromDeckTo: aPlayer [ 
+Board >> giveCardFromDeckTo: aPlayer [
 	discardDeck isEmpty ifFalse:[
 		(self cardHandlerOf: aPlayer) addToHand: (deck pick)
 	].
 
+	deck isEmpty ifTrue: [
+		deck := Deck with: discardDeck.
+		discardDeck := OrderedCollection new.
+	]
 ]
 
 { #category : #boolean }
@@ -226,7 +246,7 @@ Board >> positionOf: aPlayer [
 { #category : #action }
 Board >> removeFromHand: aCard to: aPlayer [
 	(self cardHandlerOf: aPlayer) removeFromHand: aCard.
-	discardDeck add: aCard
+	discardDeck add: aCard.
 ]
 
 { #category : #action }
