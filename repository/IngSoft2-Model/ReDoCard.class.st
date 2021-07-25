@@ -7,7 +7,6 @@ Class {
 { #category : #action }
 ReDoCard >> applyTo: aTarget in: aGame from: aPlayer [
 	| newCard |
-	self validateIfIsPossibleToPlayReDoCardAt: aGame.
 	newCard := aGame lastCardPlayed.
 	aGame validate: aPlayer has: self.
 	aGame addInHand: newCard to: aPlayer.

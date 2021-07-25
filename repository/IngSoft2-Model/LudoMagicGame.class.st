@@ -17,11 +17,6 @@ LudoMagicGame class >> cardNotInHandErrorMessage [
 ]
 
 { #category : #'error message' }
-LudoMagicGame class >> noActiveCardsErrorMessage [
-	^ 'This card cannot be played because there was no card played before'
-]
-
-{ #category : #'error message' }
 LudoMagicGame class >> noDicesErrorMessage [
 	^ 'There must be dices'
 ]

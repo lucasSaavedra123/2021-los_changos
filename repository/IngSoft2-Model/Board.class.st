@@ -14,6 +14,11 @@ Class {
 	#category : #'IngSoft2-Model-Core'
 }
 
+{ #category : #'as yet unclassified' }
+Board class >> noActiveCardsErrorMessage [
+	^ 'This card cannot be played because there was no card played before'
+]
+
 { #category : #'instance creation' }
 Board class >> notValidNumberOfLapsErrorMessage [
 	^ 'Number of laps must be greater than 0'
@@ -148,7 +153,7 @@ Board >> lapOf: aPlayer [
 
 { #category : #accessing }
 Board >> lastCardPlayed [
-	^ discardDeck last.
+	^ discardDeck at: discardDeck size ifAbsent: [ self error: self class noActiveCardsErrorMessage ].
 
 ]
 

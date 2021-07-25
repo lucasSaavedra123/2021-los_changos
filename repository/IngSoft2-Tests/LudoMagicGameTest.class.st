@@ -156,6 +156,26 @@ LudoMagicGameTest >> testJorgeAndJulianGotDifferentsCards [
 	self assert: (aGame has: julian the: anotherCard)
 ]
 
+{ #category : #'function one' }
+LudoMagicGameTest >> testJorgeArriveBAndCardDeliveryIsDoneOnceHePlayACard [
+	| aGame squares anOverloadCard |
+	anOverloadCard := OverloadCard new.
+	squares := {EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. DeliveryCardSquare new. DeliveryCardSquare new}.
+	aGame := LudoMagicGame
+		playedBy: players
+		withNumberOfLaps: 3
+		throwing:
+			{(LoadedDice withValues: #(1 2)).
+			(LoadedDice withValues: #(1 2))}
+		andWithBoardOfSquares: squares
+		withDeckOf: (LoadedDeck withCards: {anOverloadCard}).
+	self do: 2 theGame: aGame.
+	aGame affect: julian using: anOverloadCard by: jorge.
+	self do: 1 theGame: aGame.
+	self assert: (aGame quantityOfCardsInHandOf: jorge) equals: 2.
+	self assert: (aGame quantityOfCardsInHandOf: julian) equals: 2.
+]
+
 { #category : #'exception tests' }
 LudoMagicGameTest >> testJorgeCannotThrowAnOverloadCardThatHeDoesNotHave [
 	| aGame squares anOverloadCard |
@@ -500,7 +520,7 @@ LudoMagicGameTest >> testJulianArriveToDeliverySquareButNotGetCardWithoutCardsPl
 			(LoadedDice withValues: #(1 2))}
 		andWithBoardOfSquares: squares
 		withDeckOf: (LoadedDeck withCards: {anOverloadCard}).
-	self do: 3 theGame: aGame.
+	self do: 2 theGame: aGame.
 	self assert: (aGame quantityOfCardsInHandOf: jorge) equals: 2.
 	self assert: (aGame quantityOfCardsInHandOf: julian) equals: 2.
 ]
@@ -573,8 +593,7 @@ LudoMagicGameTest >> testJulianCannotThrowAReDoCardBecauseThereWasNoCardPlayedBe
 			(LoadedDice withValues: #(1 2))}
 		andWithBoardOfSquares: squares
 		withDeckOf: (LoadedDeck withCards: {aReDoCard}).
-
-	self assert: [ aGame affect: jorge using: aReDoCard by: jorge ] throws: LudoMagicGame noActiveCardsErrorMessage
+	self assert: [ aGame affect: jorge using: aReDoCard by: jorge ] throws: Board noActiveCardsErrorMessage
 ]
 
 { #category : #'card usage tests' }
