@@ -66,7 +66,7 @@ CardHandler >> removeFromHand: aCard [
 	cardsInHand remove:aCard.
 ]
 
-{ #category : #action }
+{ #category : #accessing }
 CardHandler >> totalEffectsOnPlayer [
 	cardsThatAffect isEmpty ifTrue:[^0].
 	^cardsThatAffect sum:[:card| card effect ].

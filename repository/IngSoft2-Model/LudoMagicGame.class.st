@@ -92,12 +92,12 @@ LudoMagicGame >> applyEffectOfTheLastPlayedSquareTo: aPlayer from:aCard [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 LudoMagicGame >> deckSize [
 	^ board deckSize
 ]
 
-{ #category : #accessing }
+{ #category : #boolean }
 LudoMagicGame >> finished [
 	^ finished.
 ]
@@ -164,7 +164,7 @@ LudoMagicGame >> removeToAllPlayersPermanent: aCard [
 	board removeToAllPlayersPermanent: aCard
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 LudoMagicGame >> size [
 	^ board size
 	
@@ -175,7 +175,7 @@ LudoMagicGame >> throwDices [
 	^(dices collect:[ :dice | dice roll ]) sum .
 ]
 
-{ #category : #accessing }
+{ #category : #action }
 LudoMagicGame >> turn [
 	self validateIfRollsAreAllowed.
 	board move: turnPlayer forward: self numberOfSquaresToMove.

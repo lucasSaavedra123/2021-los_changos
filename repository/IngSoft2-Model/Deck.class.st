@@ -30,7 +30,7 @@ Deck >> initializeWith: aGroupOfCards [
 	cards := aGroupOfCards asOrderedCollection shuffled.
 ]
 
-{ #category : #accesing }
+{ #category : #boolean }
 Deck >> isEmpty [
 	^ cards isEmpty 
 ]
@@ -44,7 +44,7 @@ Deck >> pick [
 	^ cardToPick
 ]
 
-{ #category : #actions }
+{ #category : #accesing }
 Deck >> size [
 	^ cards size
 ]

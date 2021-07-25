@@ -38,7 +38,7 @@ ProbabilisticEvent >> object [
 	^ object
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 ProbabilisticEvent >> probability [
 	^ probability
 ]

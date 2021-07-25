@@ -98,7 +98,7 @@ Board >> applyEffectOfTheLastPlayedSquareTo: aPlayer from: aCard [
 
 ]
 
-{ #category : #boolean }
+{ #category : #accessing }
 Board >> cardHandlerOf: aPlayer [
 	| playerCardHandler |
 	playerCardHandler := cardHandlers
@@ -119,7 +119,7 @@ Board >> distributeCardsFrom: aDeck [
 			cardHandler addToHand: aDeck pick ]
 ]
 
-{ #category : #accessing }
+{ #category : #boolean }
 Board >> finished: aPlayer [
 	| playerPosition squaresAdvanced |
 	playerPosition := self positionOf: aPlayer.
