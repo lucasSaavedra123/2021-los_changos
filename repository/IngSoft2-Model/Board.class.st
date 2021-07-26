@@ -9,7 +9,8 @@ Class {
 		'cardHandlers',
 		'deck',
 		'lastSquarePlayed',
-		'discardDeck'
+		'discardDeck',
+		'history'
 	],
 	#category : #'IngSoft2-Model-Core'
 }
@@ -155,6 +156,7 @@ Board >> initializePlayedBy: aGroupOfPlayers withNumberOf: numberOfLaps with: aG
 	squares := aGroupOfSquares.
 	laps := numberOfLaps.
 	discardDeck := OrderedCollection new.
+	history := OrderedCollection new.
 	players := aGroupOfPlayers.
 	deck := aDeck.
 	lastSquarePlayed := EffectlessSquare new.
@@ -166,15 +168,9 @@ Board >> lapOf: aPlayer [
 ]
 
 { #category : #accessing }
-Board >> lastCardPlayed [
-	^ discardDeck at: discardDeck size ifAbsent: [ self error: self class noActiveCardsErrorMessage ].
-
-]
-
-{ #category : #accessing }
 Board >> lastPlayableCardPlayed [
 	| notRedoCards |
-	notRedoCards := discardDeck select: [ :aCard | aCard isNotReDo ].
+	notRedoCards := history select: [ :aCard | aCard isNotReDo ].
 	^ notRedoCards at: notRedoCards size ifAbsent: [self error: self class noActiveCardsErrorMessage]
 ]
 
@@ -259,6 +255,7 @@ Board >> refillDeck [
 Board >> removeFromHand: aCard to: aPlayer [
 	(self cardHandlerOf: aPlayer) removeFromHand: aCard.
 	discardDeck add: aCard.
+	history add: aCard.
 ]
 
 { #category : #action }

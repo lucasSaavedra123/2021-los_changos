@@ -136,11 +136,6 @@ LudoMagicGame >> lapOf: player [
 	^ board lapOf: player
 ]
 
-{ #category : #action }
-LudoMagicGame >> lastCardPlayed [
-	^board lastCardPlayed.
-]
-
 { #category : #accessing }
 LudoMagicGame >> lastPlayableCardPlayed [
 	^ board lastPlayableCardPlayed 

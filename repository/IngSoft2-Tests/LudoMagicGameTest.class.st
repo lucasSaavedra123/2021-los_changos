@@ -1030,6 +1030,41 @@ LudoMagicGameTest >> testJulianGetsAReDoCardAfterJorgeThrewAnotherReDoCardAndPla
 ]
 
 { #category : #'card usage tests' }
+LudoMagicGameTest >> testJulianGetsAReDoCardAfterTheDeckIsShuffled [ 
+	| aGame squares aReDoCard anOverloadCard aSpeedCard |
+	aReDoCard := ReDoCard new.
+	anOverloadCard := OverloadCard new.
+	aSpeedCard:= SpeedCard new.
+	squares := {
+		DeliveryCardSquare new.
+		DeliveryCardSquare new.
+		DeliveryCardSquare new.
+		DeliveryCardSquare new.
+		DeliveryCardSquare new}.
+	aGame := LudoMagicGame
+		playedBy: players
+		withNumberOfLaps: 4
+		throwing:
+			{(LoadedDice withValues: #(1 2)).
+			(LoadedDice withValues: #(1 2))}
+		andWithBoardOf: squares
+		and:
+			(LoadedDeck
+				with:
+					{anOverloadCard . aSpeedCard.
+					anOverloadCard . aReDoCard . 
+					anOverloadCard}).
+					
+	aGame affect: jorge using: aSpeedCard by:jorge.
+	self do: 5 theGame: aGame.
+	aGame affect: julian using: aReDoCard by: julian. 
+	aGame turn.
+	
+	self assert: (aGame numberOfSquareOf: julian) equals: 4.
+	self assert: (aGame numberOfSquareOf: jorge) equals: 5.
+]
+
+{ #category : #'card usage tests' }
 LudoMagicGameTest >> testJulianGetsAnOverloadCardAndThrowItToJorge [
 	| aGame squares anOverloadCard |
 	anOverloadCard := OverloadCard new.
