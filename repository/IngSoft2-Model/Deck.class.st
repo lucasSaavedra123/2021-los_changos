@@ -35,11 +35,6 @@ Deck >> initializeWith: aGroupOfCards [
 	cards := aGroupOfCards asOrderedCollection shuffled.
 ]
 
-{ #category : #boolean }
-Deck >> isEmpty [
-	^ cards isEmpty 
-]
-
 { #category : #actions }
 Deck >> pick [
 	| cardToPick |
