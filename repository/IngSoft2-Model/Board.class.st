@@ -7,10 +7,10 @@ Class {
 		'positions',
 		'squares',
 		'cardHandlers',
-		'deck',
 		'lastSquarePlayed',
 		'discardDeck',
-		'history'
+		'history',
+		'mainDeck'
 	],
 	#category : #'IngSoft2-Model-Core'
 }
@@ -103,11 +103,6 @@ Board >> cardHandlerOf: aPlayer [
 ]
 
 { #category : #accessing }
-Board >> deckSize [
-	^ deck size
-]
-
-{ #category : #accessing }
 Board >> discardDeckSize [
 	^ discardDeck size
 ]
@@ -131,10 +126,10 @@ Board >> finished: aPlayer [
 { #category : #action }
 Board >> giveCardFromDeckTo: aPlayer [
 	discardDeck isEmpty ifFalse:[
-		(self cardHandlerOf: aPlayer) addToHand: (deck pick)
+		(self cardHandlerOf: aPlayer) addToHand: (mainDeck pick)
 	].
 
-	deck isEmpty ifTrue: [
+	mainDeck isEmpty ifTrue: [
 		self refillDeck.
 	]
 ]
@@ -158,7 +153,7 @@ Board >> initializePlayedBy: aGroupOfPlayers withNumberOf: numberOfLaps with: aG
 	discardDeck := OrderedCollection new.
 	history := OrderedCollection new.
 	players := aGroupOfPlayers.
-	deck := aDeck.
+	mainDeck := aDeck.
 	lastSquarePlayed := EffectlessSquare new.
 ]
 
@@ -177,6 +172,11 @@ Board >> lastPlayableCardPlayed [
 { #category : #accessing }
 Board >> limit [
 	^(laps * (squares size)) + 1
+]
+
+{ #category : #accessing }
+Board >> mainDeckSize [
+	^ mainDeck size
 ]
 
 { #category : #action }
@@ -247,7 +247,7 @@ Board >> positionOf: aPlayer [
 
 { #category : #action }
 Board >> refillDeck [
-	deck := Deck with: discardDeck.
+	mainDeck := Deck with: discardDeck.
 	discardDeck := OrderedCollection new.
 ]
 

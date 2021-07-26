@@ -12,5 +12,5 @@ CancellationCard >> applyTo: aTarget in: aGame [
 { #category : #action }
 CancellationCard >> applyTo: aTarget in: aGame from: aPlayer [
 	aGame validateThrowOfAnInstantaneous: self from: aPlayer.
-	aGame removeToAllPlayersPermanent: aTarget .
+	self applyTo: aTarget in: aGame
 ]

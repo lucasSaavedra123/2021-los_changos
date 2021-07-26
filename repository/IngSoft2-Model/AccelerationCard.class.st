@@ -12,7 +12,7 @@ AccelerationCard >> applyTo: aTarget in: aGame [
 { #category : #action }
 AccelerationCard >> applyTo: aTarget in: aGame from: aPlayer [
 	aGame validateThrowOfAPermanent: self  from: aPlayer.
-	aGame addToAllEffectOf:self.
+	self applyTo: aTarget in: aGame
 
 ]
 

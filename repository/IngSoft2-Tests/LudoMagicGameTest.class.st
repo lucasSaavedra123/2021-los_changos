@@ -158,7 +158,7 @@ LudoMagicGameTest >> testAllCardsWereGivenToEachPlayerAndDeckIsOne [
 		}).
 	aGame affect: julian using: anOverloadCard by: jorge.
 	self do: 20 theGame: aGame.
-	self assert: (aGame deckSize) equals: 1.
+	self assert: (aGame mainDeckSize) equals: 1.
 ]
 
 { #category : #'decks behavior' }
@@ -892,7 +892,7 @@ LudoMagicGameTest >> testJulianGetsAReDoCardAfterJorgeThrewAnCancellationCardAnd
 	aGame turn.
 	aGame affect:anOverloadCard  using:aReDoCard  by: julian.  
 	self do: 10 theGame: aGame.
-	self assert: (aGame deckSize) equals: 4.
+	self assert: (aGame mainDeckSize) equals: 4.
 ]
 
 { #category : #'card usage tests' }

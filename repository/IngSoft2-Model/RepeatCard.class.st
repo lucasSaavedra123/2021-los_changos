@@ -12,5 +12,5 @@ RepeatCard >> applyTo: aTarget in: aGame [
 { #category : #action }
 RepeatCard >> applyTo: aTarget in: aGame from: aPlayer [
 	aGame validateThrowOfAnInstantaneous: self from: aPlayer.
-	aGame applyEffectOfTheLastPlayedSquareTo: aTarget from:self.
+	self applyTo: aTarget in: aGame
 ]

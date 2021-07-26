@@ -92,11 +92,6 @@ LudoMagicGame >> applyEffectOfTheLastPlayedSquareTo: aPlayer from:aCard [
 	
 ]
 
-{ #category : #accessing }
-LudoMagicGame >> deckSize [
-	^ board deckSize
-]
-
 { #category : #accesing }
 LudoMagicGame >> discardDeckSize [
 	^ board discardDeckSize
@@ -139,6 +134,11 @@ LudoMagicGame >> lapOf: player [
 { #category : #accessing }
 LudoMagicGame >> lastPlayableCardPlayed [
 	^ board lastPlayableCardPlayed 
+]
+
+{ #category : #accessing }
+LudoMagicGame >> mainDeckSize [
+	^ board mainDeckSize
 ]
 
 { #category : #accessing }

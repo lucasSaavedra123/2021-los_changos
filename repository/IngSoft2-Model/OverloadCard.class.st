@@ -12,7 +12,7 @@ OverloadCard >> applyTo: aTarget in: aGame [
 { #category : #action }
 OverloadCard >> applyTo: aTarget in: aGame from: aPlayer [
 	aGame validateThrowOfAPermanent: self  from: aPlayer.
-	aGame addEffectOf:self to:aTarget. 
+	self applyTo: aTarget in: aGame
 ]
 
 { #category : #accesing }
