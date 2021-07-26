@@ -5,8 +5,6 @@
 
 ## Metacello
 
-## Metacello
-
 ```smalltalk
 Metacello new
    baseline: 'IngSoft2';
