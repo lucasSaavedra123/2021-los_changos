@@ -126,7 +126,7 @@ Board >> finished: aPlayer [
 { #category : #action }
 Board >> giveCardFromDeckTo: aPlayer [
 	discardDeck ifNotEmpty: [ (self cardHandlerOf: aPlayer) addToHand: (mainDeck pick) ].
-	mainDeck ifEmpty: [ self refillDeck ]
+	self refillMainDeck.
 ]
 
 { #category : #boolean }
@@ -241,15 +241,17 @@ Board >> positionOf: aPlayer [
 ]
 
 { #category : #action }
-Board >> refillDeck [
-	mainDeck := Deck with: discardDeck.
-	discardDeck := OrderedCollection new.
+Board >> refillMainDeck [
+	mainDeck ifEmpty: [ 
+		mainDeck := Deck with: discardDeck.
+		discardDeck := OrderedCollection new. ]
 ]
 
 { #category : #action }
 Board >> removeFromHand: aCard to: aPlayer [
 	(self cardHandlerOf: aPlayer) removeFromHand: aCard.
 	discardDeck add: aCard.
+	self refillMainDeck.
 	history add: aCard.
 ]
 

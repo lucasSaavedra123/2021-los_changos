@@ -129,6 +129,39 @@ LudoMagicGameTest >> testAThreeLapGameCannotMakeAnotherRoundWhenItIsFinished [
 ]
 
 { #category : #'decks behavior' }
+LudoMagicGameTest >> testAllCardsAreGivenAndDeckIsEmpty [
+	| aGame squares anOverloadCard |
+	anOverloadCard := OverloadCard new.
+	squares := {EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. DeliveryCardSquare new. DeliveryCardSquare new}.
+	aGame := LudoMagicGame
+		playedBy: players
+		withNumberOfLaps: 3
+		throwing:
+			{(LoadedDice withValues: #(1 2)).
+			(LoadedDice withValues: #(1 2))}
+		andWithBoardOf: squares
+		and: (LoadedDeck with: {anOverloadCard . anOverloadCard . anOverloadCard . anOverloadCard }).
+		self assert: aGame mainDeckSize equals: 0
+]
+
+{ #category : #'decks behavior' }
+LudoMagicGameTest >> testAllCardsAreGivenAndJorgePlaysACardAndDeckHasOneCard [
+	| aGame squares anOverloadCard |
+	anOverloadCard := OverloadCard new.
+	squares := {EffectlessSquare new. EffectlessSquare new. EffectlessSquare new. DeliveryCardSquare new. DeliveryCardSquare new}.
+	aGame := LudoMagicGame
+		playedBy: players
+		withNumberOfLaps: 3
+		throwing:
+			{(LoadedDice withValues: #(1 2)).
+			(LoadedDice withValues: #(1 2))}
+		andWithBoardOf: squares
+		and: (LoadedDeck with: {anOverloadCard . anOverloadCard . anOverloadCard . anOverloadCard }).
+		aGame affect: julian using: anOverloadCard by: jorge. 
+		self assert: aGame mainDeckSize equals: 1
+]
+
+{ #category : #'decks behavior' }
 LudoMagicGameTest >> testAllCardsWereGivenToEachPlayerAndDeckIsOne [
 	| aGame squares anOverloadCard |
 	anOverloadCard := OverloadCard new.
