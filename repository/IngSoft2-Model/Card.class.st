@@ -13,3 +13,8 @@ Card >> applyTo: aTarget in: aGame [
 Card >> applyTo: aTarget in: aGame from: aPlayer [
 	self subclassResponsibility.
 ]
+
+{ #category : #action }
+Card >> isNotReDo [
+	^ true
+]

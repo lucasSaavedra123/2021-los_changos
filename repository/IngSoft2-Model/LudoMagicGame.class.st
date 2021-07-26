@@ -142,6 +142,11 @@ LudoMagicGame >> lastCardPlayed [
 ]
 
 { #category : #accessing }
+LudoMagicGame >> lastPlayableCardPlayed [
+	^ board lastPlayableCardPlayed 
+]
+
+{ #category : #accessing }
 LudoMagicGame >> numberOfSquareOf: aPlayer [ 
 	^ (board positionOf: aPlayer) numberOfSquare 
 ]

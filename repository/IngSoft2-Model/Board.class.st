@@ -134,8 +134,7 @@ Board >> giveCardFromDeckTo: aPlayer [
 	].
 
 	deck isEmpty ifTrue: [
-		deck := Deck with: discardDeck.
-		discardDeck := OrderedCollection new.
+		self refillDeck.
 	]
 ]
 
@@ -170,6 +169,13 @@ Board >> lapOf: aPlayer [
 Board >> lastCardPlayed [
 	^ discardDeck at: discardDeck size ifAbsent: [ self error: self class noActiveCardsErrorMessage ].
 
+]
+
+{ #category : #accessing }
+Board >> lastPlayableCardPlayed [
+	| notRedoCards |
+	notRedoCards := discardDeck select: [ :aCard | aCard isNotReDo ].
+	^ notRedoCards at: notRedoCards size ifAbsent: [self error: self class noActiveCardsErrorMessage]
 ]
 
 { #category : #accessing }
@@ -241,6 +247,12 @@ Board >> players [
 { #category : #accessing }
 Board >> positionOf: aPlayer [ 
 	^ positions detect: [ :aPosition | aPosition player = aPlayer  ]
+]
+
+{ #category : #action }
+Board >> refillDeck [
+	deck := Deck with: discardDeck.
+	discardDeck := OrderedCollection new.
 ]
 
 { #category : #action }
