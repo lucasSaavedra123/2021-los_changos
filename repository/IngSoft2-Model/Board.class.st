@@ -21,8 +21,8 @@ Board class >> noActiveCardsErrorMessage [
 ]
 
 { #category : #'error message' }
-Board class >> notValidDeckSizeErrorMessage [
-	^ 'Deck should be of size 4 or more'
+Board class >> notValidDeckSizeErrorMessage: numberOfPlayers [
+	^ 'Deck should be of size ', (numberOfPlayers * 2) asString,' or more'
 ]
 
 { #category : #'error message' }
@@ -51,12 +51,12 @@ Board class >> validate: players withNumberOf: laps on: squares with: deck [.
 	self validatePlayers: players.
 	self validateLaps: laps.
 	self validateSquares: squares.
-	self validateDeck: deck.
+	self validateDeck: deck for: players.
 ]
 
 { #category : #validation }
-Board class >> validateDeck: aDeck [ 
-	aDeck size = 1 ifTrue: [ self error: self notValidDeckSizeErrorMessage ]
+Board class >> validateDeck: aDeck for: players [
+	aDeck size < (players size * 2) ifTrue: [ self error: (self notValidDeckSizeErrorMessage: players size)]
 ]
 
 { #category : #validation }
@@ -125,13 +125,8 @@ Board >> finished: aPlayer [
 
 { #category : #action }
 Board >> giveCardFromDeckTo: aPlayer [
-	discardDeck isEmpty ifFalse:[
-		(self cardHandlerOf: aPlayer) addToHand: (mainDeck pick)
-	].
-
-	mainDeck isEmpty ifTrue: [
-		self refillDeck.
-	]
+	discardDeck ifNotEmpty: [ (self cardHandlerOf: aPlayer) addToHand: (mainDeck pick) ].
+	mainDeck ifEmpty: [ self refillDeck ]
 ]
 
 { #category : #boolean }

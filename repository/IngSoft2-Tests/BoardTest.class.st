@@ -14,7 +14,33 @@ BoardTest >> testABoardCannotBeCreatedWithDeckOfOneCard [
 					EffectlessSquare new.
 					EffectlessSquare new}
 				andCardsFrom: (Deck with: {Card new})
-				finishingAfter: 1 ] throws: Board notValidDeckSizeErrorMessage
+				finishingAfter: 1 ] throws: (Board notValidDeckSizeErrorMessage:2)
+]
+
+{ #category : #'exception tests' }
+BoardTest >> testABoardCannotBeCreatedWithDeckOfTenCardsIfThereAreSixPlayers [
+	self assert: [ Board
+				playedBy: {'jorge' . 'julian' . 'ignacio' . 'gonzalo' . 'hernan' . 'lucas'}
+				with: {EffectlessSquare new.
+					EffectlessSquare new.
+					EffectlessSquare new.
+					EffectlessSquare new.
+					EffectlessSquare new}
+				andCardsFrom: (Deck with: {Card new . Card new . Card new . Card new . Card new. Card new . Card new . Card new . Card new . Card new})
+				finishingAfter: 1 ] throws: (Board notValidDeckSizeErrorMessage: 6)
+]
+
+{ #category : #'exception tests' }
+BoardTest >> testABoardCannotBeCreatedWithDeckOfThreeCardsIfThereAreTwoPlayers [
+	self assert: [ Board
+				playedBy: {'jorge' . 'julian'}
+				with: {EffectlessSquare new.
+					EffectlessSquare new.
+					EffectlessSquare new.
+					EffectlessSquare new.
+					EffectlessSquare new}
+				andCardsFrom: (Deck with: {Card new . Card new . Card new})
+				finishingAfter: 1 ] throws: (Board notValidDeckSizeErrorMessage: 2)
 ]
 
 { #category : #'exception tests' }

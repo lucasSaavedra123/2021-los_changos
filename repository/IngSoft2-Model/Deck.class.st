@@ -25,6 +25,11 @@ Deck class >> with: cards [
 	^ self new initializeWith: cards.
 ]
 
+{ #category : #'as yet unclassified' }
+Deck >> ifEmpty: aBlock [
+	cards ifEmpty: aBlock
+]
+
 { #category : #initialization }
 Deck >> initializeWith: aGroupOfCards [
 	cards := aGroupOfCards asOrderedCollection shuffled.
