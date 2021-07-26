@@ -1,7 +1,7 @@
 # Ingenieria del Software II - Template
 
-[![Build Status](https://travis-ci.com/lucasSaavedra123/2021-los_changos.svg?branch=master)](https://travis-ci.com/lucasSaavedra123/2021-los_changos)
-[![Coverage Status](https://coveralls.io/repos/github/lucasSaavedra123/2021-los_changos/badge.svg?branch=master)](https://coveralls.io/github/lucasSaavedra123/2021-los_changos?branch=master)
+![GHA Status](https://github.com/lucassaavedra123/2021-los_changos/actions/workflows/GHA.yml/badge.svg)
+[![Coverage Status](https://coveralls.io/repos/github/lucassaavedra123/2021-los_changos/badge.svg?branch=master)](https://coveralls.io/github/lucassaavedra123/2021-los_changos?branch=master)
 
 ## Metacello
 
