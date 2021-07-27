@@ -1398,12 +1398,11 @@ LudoMagicGameTest >> testJulianGetsAReDoCardAfterTheDeckIsShuffled [
 	| aGame squares aReDoCard aSpeedCard |
 	aReDoCard := ReDoCard new.
 	aSpeedCard := SpeedCard new.
-	squares := {
-		DeliveryCardSquare new.
-		DeliveryCardSquare new.
-		DeliveryCardSquare new.
-		DeliveryCardSquare new.
-		DeliveryCardSquare new}.
+	squares := {DeliveryCardSquare new.
+	DeliveryCardSquare new.
+	DeliveryCardSquare new.
+	DeliveryCardSquare new.
+	DeliveryCardSquare new}.
 	aGame := LudoMagicGame
 		playedBy: players
 		withNumberOfLaps: 4
@@ -1418,10 +1417,10 @@ LudoMagicGameTest >> testJulianGetsAReDoCardAfterTheDeckIsShuffled [
 					AccelerationCard new.
 					aReDoCard.
 					SpeedCard new.
-					ReDoCard new.
-					SpeedCard new}).
+					ReDoCard new}).
 	aGame affect: jorge using: aSpeedCard by: jorge.
 	self do: 5 the: aGame.
+	self assert: aGame mainDeckSize equals: 1.
 	aGame affect: julian using: aReDoCard by: julian.
 	aGame turn.
 	self assert: (aGame numberOfSquareOf: julian) equals: 4.
