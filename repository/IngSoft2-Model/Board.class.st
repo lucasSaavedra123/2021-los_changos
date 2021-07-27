@@ -22,7 +22,8 @@ Board class >> noActiveCardsErrorMessage [
 
 { #category : #'error message' }
 Board class >> notValidDeckSizeErrorMessageWith: numberOfPlayers [
-	^ 'Deck should be of size ', (numberOfPlayers * 2) asString,' or more'
+	^ 'Deck should be of size ' , (numberOfPlayers * 2) asString
+		, ' or more'
 ]
 
 { #category : #'error message' }
