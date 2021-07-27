@@ -25,21 +25,22 @@ Deck class >> with: cards [
 	^ self new initializeWith: cards.
 ]
 
-{ #category : #'as yet unclassified' }
-Deck >> ifEmpty: aBlock [
-	cards ifEmpty: aBlock
-]
-
 { #category : #initialization }
 Deck >> initializeWith: aGroupOfCards [
-	cards := aGroupOfCards asOrderedCollection shuffled.
+	cards := aGroupOfCards asOrderedCollection shuffled
+]
+
+{ #category : #boolean }
+Deck >> isEmpty [
+	^ cards isEmpty
 ]
 
 { #category : #actions }
 Deck >> pick [
 	| cardToPick |
-	
-	cardToPick := cards at: 1 ifAbsent: [ self error: self class noMoreCardsToPickErrorMessage ].
+	cardToPick := cards
+		at: 1
+		ifAbsent: [ self error: self class noMoreCardsToPickErrorMessage ].
 	cards remove: cardToPick.
 	^ cardToPick
 ]

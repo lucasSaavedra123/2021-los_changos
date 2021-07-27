@@ -20,30 +20,30 @@ CardHandler class >> with: aPlayer [
 ]
 
 { #category : #action }
-CardHandler >> addEffectOf: aCard [ 
-	cardsThatAffect add: aCard.
+CardHandler >> addEffectOf: aCard [
+	cardsThatAffect add: aCard
 ]
 
 { #category : #action }
-CardHandler >> addToHand: aCard [ 
-	cardsInHand add: aCard.
+CardHandler >> addToHand: aCard [
+	cardsInHand add: aCard
 ]
 
 { #category : #boolean }
 CardHandler >> affectsPlayer: aCard [
-	^ cardsThatAffect includes: aCard.
+	^ cardsThatAffect includes: aCard
 ]
 
 { #category : #boolean }
-CardHandler >> hasInHand: aCard [ 
+CardHandler >> hasInHand: aCard [
 	^ cardsInHand includes: aCard
 ]
 
 { #category : #initialization }
-CardHandler >> initializeWith: aPlayer [ 
+CardHandler >> initializeWith: aPlayer [
 	player := aPlayer.
 	cardsInHand := OrderedCollection new.
-	cardsThatAffect := OrderedCollection new.
+	cardsThatAffect := OrderedCollection new
 ]
 
 { #category : #accessing }
@@ -58,16 +58,19 @@ CardHandler >> quantityOfCardsInHand [
 
 { #category : #action }
 CardHandler >> removeEffectOf: aCard [
-	cardsThatAffect remove: aCard ifAbsent: [ ^self error: self class noCardMatchErrorMessage ].
+	cardsThatAffect
+		remove: aCard
+		ifAbsent: [ ^ self error: self class noCardMatchErrorMessage ]
 ]
 
 { #category : #action }
 CardHandler >> removeFromHand: aCard [
-	cardsInHand remove:aCard.
+	cardsInHand remove: aCard
 ]
 
 { #category : #accessing }
 CardHandler >> totalEffectsOnPlayer [
-	cardsThatAffect isEmpty ifTrue:[^0].
-	^cardsThatAffect sum:[:card| card effect ].
+	cardsThatAffect isEmpty
+		ifTrue: [ ^ 0 ].
+	^ cardsThatAffect sum: [ :card | card effect ]
 ]

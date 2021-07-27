@@ -21,7 +21,7 @@ Board class >> noActiveCardsErrorMessage [
 ]
 
 { #category : #'error message' }
-Board class >> notValidDeckSizeErrorMessage: numberOfPlayers [
+Board class >> notValidDeckSizeErrorMessageWith: numberOfPlayers [
 	^ 'Deck should be of size ', (numberOfPlayers * 2) asString,' or more'
 ]
 
@@ -56,7 +56,7 @@ Board class >> validate: players withNumberOf: laps on: squares with: deck [.
 
 { #category : #validation }
 Board class >> validateDeck: aDeck for: players [
-	aDeck size < (players size * 2) ifTrue: [ self error: (self notValidDeckSizeErrorMessage: players size)]
+	aDeck size < (players size * 2) ifTrue: [ self error: (self notValidDeckSizeErrorMessageWith: players size)]
 ]
 
 { #category : #validation }
@@ -67,8 +67,8 @@ Board class >> validateLaps: laps [
 
 { #category : #validation }
 Board class >> validatePlayers: players [
-	players size <= 1
-		ifTrue: [ self error: self notValidNumberOfPlayersErrorMessage ]
+	players size > 1
+		ifFalse: [ self error: self notValidNumberOfPlayersErrorMessage ]
 ]
 
 { #category : #validation }
@@ -79,27 +79,27 @@ Board class >> validateSquares: squares [
 
 { #category : #action }
 Board >> addEffectOf: aCard to: aPlayer [
-	(self cardHandlerOf: aPlayer) addEffectOf: aCard.
+	(self cardHandlerOf: aPlayer) addEffectOf: aCard
 ]
 
 { #category : #action }
-Board >> addToAllEffectOf: aCard [ 
-	players do:[:player | self addEffectOf: aCard to:player].
-	
+Board >> addToAllEffectOf: aCard [
+	players do: [ :player | self addEffectOf: aCard to: player ]
 ]
 
 { #category : #action }
 Board >> applyEffectOfTheLastPlayedSquareTo: aPlayer from: aCard [
-	lastSquarePlayed makeEffectOn: aPlayer thatHasItsPositionIn: self.
-
+		lastSquarePlayed makeEffectOn: aPlayer thatHasItsPositionIn: self
 ]
 
 { #category : #accessing }
-Board >> cardHandlerOf: aPlayer [
-	| playerCardHandler |
-	playerCardHandler := cardHandlers
-		detect: [ :handler | handler player = aPlayer ].
-	^ playerCardHandler
+Board >> cardHandlerOf: aPlayer [.
+		^ cardHandlers detect: [ :handler | handler player = aPlayer ]
+]
+
+{ #category : #action }
+Board >> decksHasToBeRedistributed [
+	^ mainDeck isEmpty and: discardDeck isNotEmpty
 ]
 
 { #category : #accessing }
@@ -108,11 +108,10 @@ Board >> discardDeckSize [
 ]
 
 { #category : #initialization }
-Board >> distributeCardsFrom: aDeck [
+Board >> distribute: aNumberOfCards CardsToEveryPlayerFrom: aDeck [
 	cardHandlers
-		do: [ :cardHandler | 
-			cardHandler addToHand: aDeck pick.
-			cardHandler addToHand: aDeck pick ]
+		do:
+			[ :cardHandler | 1 to: aNumberOfCards do: [ :number | cardHandler addToHand: aDeck pick ] ]
 ]
 
 { #category : #boolean }
@@ -125,8 +124,9 @@ Board >> finished: aPlayer [
 
 { #category : #action }
 Board >> giveCardFromDeckTo: aPlayer [
-	discardDeck ifNotEmpty: [ (self cardHandlerOf: aPlayer) addToHand: (mainDeck pick) ].
-	self refillMainDeck.
+	discardDeck
+		ifNotEmpty: [ (self cardHandlerOf: aPlayer) addToHand: mainDeck pick ].
+	self redistributeDecks
 ]
 
 { #category : #boolean }
@@ -142,31 +142,31 @@ Board >> initializePlayedBy: aGroupOfPlayers withNumberOf: numberOfLaps with: aG
 		collect: [ :player | Position of: player at: 1 after: 0 ].
 	cardHandlers := aGroupOfPlayers
 		collect: [ :player | CardHandler with: player ].
-	self distributeCardsFrom: aDeck.
+	self distribute: 2 CardsToEveryPlayerFrom: aDeck.
 	squares := aGroupOfSquares.
 	laps := numberOfLaps.
 	discardDeck := OrderedCollection new.
 	history := OrderedCollection new.
 	players := aGroupOfPlayers.
 	mainDeck := aDeck.
-	lastSquarePlayed := EffectlessSquare new.
+	lastSquarePlayed := EffectlessSquare new
 ]
 
 { #category : #accessing }
-Board >> lapOf: aPlayer [ 
-	^ (self positionOf: aPlayer) lap.
+Board >> lapOf: aPlayer [
+	^ (self positionOf: aPlayer) lap
 ]
 
 { #category : #accessing }
 Board >> lastPlayableCardPlayed [
-	| notRedoCards |
-	notRedoCards := history select: [ :aCard | aCard isNotReDo ].
-	^ notRedoCards at: notRedoCards size ifAbsent: [self error: self class noActiveCardsErrorMessage]
+	^ history reverse
+		detect: [ :aCard | aCard isNotReDo ]
+		ifNone: [ self error: self class noActiveCardsErrorMessage ]
 ]
 
 { #category : #accessing }
 Board >> limit [
-	^(laps * (squares size)) + 1
+	^ laps * squares size + 1
 ]
 
 { #category : #accessing }
@@ -176,12 +176,13 @@ Board >> mainDeckSize [
 
 { #category : #action }
 Board >> move: aPlayer backwards: numberOfSquares [
-
 	| aPosition newPosition |
 	aPosition := self positionOf: aPlayer.
-	newPosition := self newPosition: (numberOfSquares negated) from: aPosition. 
+	newPosition := self
+		newPosition: numberOfSquares negated
+		from: aPosition.
 	positions remove: aPosition.
-	positions add: newPosition.
+	positions add: newPosition
 ]
 
 { #category : #action }
@@ -204,11 +205,13 @@ Board >> move: aPlayer withoutEffectTo: squaresToMove [
 ]
 
 { #category : #accessing }
-Board >> moveAllPlayersBackards: numberOfSquaresToMoveBackwards except: aPlayer [ 
+Board >> moveAllPlayersBackards: numberOfSquaresToMoveBackwards except: aPlayer [
 	| playersToMove |
-	playersToMove:= self players.
+	playersToMove := self players.
 	playersToMove remove: aPlayer.
-	playersToMove do:[:player| self move: player backwards: numberOfSquaresToMoveBackwards ].
+	playersToMove
+		do:
+			[ :player | self move: player backwards: numberOfSquaresToMoveBackwards ]
 ]
 
 { #category : #accessing }
@@ -232,27 +235,28 @@ Board >> numberOfSquaresAdvancedOf: aPosition [
 
 { #category : #accessing }
 Board >> players [
-	^ players copy.
+	^ players copy
 ]
 
 { #category : #accessing }
-Board >> positionOf: aPlayer [ 
-	^ positions detect: [ :aPosition | aPosition player = aPlayer  ]
+Board >> positionOf: aPlayer [
+	^ positions detect: [ :aPosition | aPosition player = aPlayer ]
 ]
 
 { #category : #action }
-Board >> refillMainDeck [
-	mainDeck ifEmpty: [ 
-		mainDeck := Deck with: discardDeck.
-		discardDeck := OrderedCollection new. ]
+Board >> redistributeDecks [
+	self decksHasToBeRedistributed
+		ifFalse: [ ^ self ].
+	mainDeck := Deck with: discardDeck.
+	discardDeck := OrderedCollection new
 ]
 
 { #category : #action }
 Board >> removeFromHand: aCard to: aPlayer [
 	(self cardHandlerOf: aPlayer) removeFromHand: aCard.
 	discardDeck add: aCard.
-	self refillMainDeck.
 	history add: aCard.
+	self redistributeDecks
 ]
 
 { #category : #action }
@@ -260,19 +264,15 @@ Board >> removeToAllPlayersPermanent: card [
 	| handlersWithCardToBeRemoved |
 	handlersWithCardToBeRemoved := cardHandlers
 		select: [ :cardHandler | cardHandler affectsPlayer: card ].
-	self
-	validateIsNotEmpty: handlersWithCardToBeRemoved.
+	self validateIsNotEmpty: handlersWithCardToBeRemoved.
 	handlersWithCardToBeRemoved
-		do: [ :cardHandler | cardHandler removeEffectOf: card ].
-
-
+		do: [ :cardHandler | cardHandler removeEffectOf: card ]
 ]
 
 { #category : #action }
 Board >> restartPositionOfAllPlayers [
 	positions := players
-		collect:
-			[ :player | Position of: player at: 1 after: (self lapOf: player) ]
+		collect: [ :player | Position of: player at: 1 after: (self lapOf: player) ]
 ]
 
 { #category : #accessing }
@@ -282,7 +282,8 @@ Board >> size [
 
 { #category : #accessing }
 Board >> sortedPositions [
-	^ positions asSortedCollection: [ :playerA :playerB | playerA >= playerB ]
+	^ positions
+		asSortedCollection: [ :playerA :playerB | playerA >= playerB ]
 ]
 
 { #category : #action }

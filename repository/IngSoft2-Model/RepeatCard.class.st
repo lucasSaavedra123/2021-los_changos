@@ -6,7 +6,7 @@ Class {
 
 { #category : #action }
 RepeatCard >> applyTo: aTarget in: aGame [
-	aGame applyEffectOfTheLastPlayedSquareTo: aTarget from:self.
+	aGame applyEffectOfTheLastPlayedSquareTo: aTarget from: self
 ]
 
 { #category : #action }

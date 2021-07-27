@@ -14,10 +14,12 @@ MoonWalkSquare class >> with: numberOfSquaresToMoveBackwards [
 
 { #category : #initalize }
 MoonWalkSquare >> initializeWith: aNumberOfSquaresToMoveBackwards [ 
-	numberOfSquaresToMoveBackwards:= aNumberOfSquaresToMoveBackwards.
+	numberOfSquaresToMoveBackwards := aNumberOfSquaresToMoveBackwards.
 ]
 
 { #category : #action }
-MoonWalkSquare >> makeEffectOn: aPlayer thatHasItsPositionIn: aBoard [ 
-	aBoard moveAllPlayersBackards: numberOfSquaresToMoveBackwards except: aPlayer.
+MoonWalkSquare >> makeEffectOn: aPlayer thatHasItsPositionIn: aBoard [
+	aBoard
+		moveAllPlayersBackards: numberOfSquaresToMoveBackwards
+		except: aPlayer
 ]

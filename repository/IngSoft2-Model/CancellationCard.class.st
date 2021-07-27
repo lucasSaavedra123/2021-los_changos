@@ -6,7 +6,7 @@ Class {
 
 { #category : #action }
 CancellationCard >> applyTo: aTarget in: aGame [
-	aGame removeToAllPlayersPermanent: aTarget .
+	aGame removeToAllPlayersPermanent: aTarget
 ]
 
 { #category : #action }

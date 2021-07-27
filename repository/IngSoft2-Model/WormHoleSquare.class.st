@@ -6,5 +6,5 @@ Class {
 
 { #category : #action }
 WormHoleSquare >> makeEffectOn: aPlayer thatHasItsPositionIn: board [
-	board move: aPlayer backwards: 4.
+	board move: aPlayer backwards: 4
 ]

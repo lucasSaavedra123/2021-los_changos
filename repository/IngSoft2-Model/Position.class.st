@@ -37,17 +37,17 @@ Position class >> validateNumberOf: lap and: numberOfSquare [
 ]
 
 { #category : #comparing }
-Position >> >= aPosition [ 
-
-	self lap = aPosition lap ifTrue: [ ^ self numberOfSquare >= aPosition numberOfSquare ].
-	^ self lap >= aPosition lap.
+Position >> >= aPosition [
+	self lap = aPosition lap
+		ifTrue: [ ^ self numberOfSquare >= aPosition numberOfSquare ].
+	^ self lap >= aPosition lap
 ]
 
 { #category : #initialization }
-Position >> initializeWithLap: aLap numberOfSquare: aNumberOfSquare for: aPlayer [ 
+Position >> initializeWithLap: aLap numberOfSquare: aNumberOfSquare for: aPlayer [
 	lap := aLap.
 	numberOfSquare := aNumberOfSquare.
-	player := aPlayer.
+	player := aPlayer
 ]
 
 { #category : #accessing }

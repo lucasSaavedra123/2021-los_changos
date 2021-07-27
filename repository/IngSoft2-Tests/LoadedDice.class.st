@@ -14,16 +14,15 @@ LoadedDice class >> withValues: values [
 ]
 
 { #category : #initialization }
-LoadedDice >> initializeWithValues: aGroupOfValues [.
-	nextValue:=1.
-	values:= aGroupOfValues.
+LoadedDice >> initializeWithValues: aGroupOfValues [
+	nextValue := 1.
+	values := aGroupOfValues
 ]
 
 { #category : #accessing }
 LoadedDice >> roll [
 	| number |
-	number:=values at: nextValue.
-	nextValue:=(nextValue rem: values size) +1.
-	^number.
-	
+	number := values at: nextValue.
+	nextValue := (nextValue rem: values size) + 1.
+	^ number
 ]

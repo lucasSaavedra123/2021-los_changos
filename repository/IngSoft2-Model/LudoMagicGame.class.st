@@ -62,23 +62,19 @@ LudoMagicGame class >> playedBy: players withNumberOfLaps: laps throwing: dices 
 ]
 
 { #category : #action }
-LudoMagicGame >> addEffectOf: aCard to: aPlayer [ 
-	board addEffectOf: aCard to: aPlayer.
-	
+LudoMagicGame >> addEffectOf: aCard to: aPlayer [
+	board addEffectOf: aCard to: aPlayer
 ]
 
 { #category : #action }
 LudoMagicGame >> addToAllEffectOf: aCard [
-	board addToAllEffectOf:aCard.
-	
+	board addToAllEffectOf: aCard
 ]
 
 { #category : #action }
 LudoMagicGame >> affect: aTarget using: aCard by: aPlayer [
-	aCard applyTo:aTarget in:self from:aPlayer.
-	self removeFromHand: aCard of: aPlayer.
-	
-	
+	aCard applyTo: aTarget in: self from: aPlayer.
+	self removeFromHand: aCard of: aPlayer
 ]
 
 { #category : #action }
@@ -87,9 +83,8 @@ LudoMagicGame >> apply: aCard on: aTarget [
 ]
 
 { #category : #action }
-LudoMagicGame >> applyEffectOfTheLastPlayedSquareTo: aPlayer from:aCard [
-	board applyEffectOfTheLastPlayedSquareTo: aPlayer from:aCard.
-	
+LudoMagicGame >> applyEffectOfTheLastPlayedSquareTo: aPlayer from: aCard [
+	board applyEffectOfTheLastPlayedSquareTo: aPlayer from: aCard
 ]
 
 { #category : #accesing }
@@ -99,13 +94,12 @@ LudoMagicGame >> discardDeckSize [
 
 { #category : #boolean }
 LudoMagicGame >> finished [
-	^ finished.
+	^ finished
 ]
 
 { #category : #boolean }
-LudoMagicGame >> has: aPlayer the: aCard [ 
+LudoMagicGame >> has: aPlayer the: aCard [
 	^ board has: aPlayer the: aCard
-
 ]
 
 { #category : #initialization }
@@ -122,12 +116,12 @@ LudoMagicGame >> initializePlayedBy: players withNumberOf: laps throwing: aGroup
 ]
 
 { #category : #boolean }
-LudoMagicGame >> isTurnOf: aPlayer [ 
-	^turnPlayer = aPlayer
+LudoMagicGame >> isTurnOf: aPlayer [
+	^ turnPlayer = aPlayer
 ]
 
 { #category : #accessing }
-LudoMagicGame >> lapOf: player [ 
+LudoMagicGame >> lapOf: player [
 	^ board lapOf: player
 ]
 
@@ -142,15 +136,16 @@ LudoMagicGame >> mainDeckSize [
 ]
 
 { #category : #accessing }
-LudoMagicGame >> numberOfSquareOf: aPlayer [ 
-	^ (board positionOf: aPlayer) numberOfSquare 
+LudoMagicGame >> numberOfSquareOf: aPlayer [
+	^ (board positionOf: aPlayer) numberOfSquare
 ]
 
 { #category : #accessing }
 LudoMagicGame >> numberOfSquaresToMove [
 	| finalResult |
 	finalResult := self throwDices.
-	finalResult := finalResult + (board cardHandlerOf: turnPlayer) totalEffectsOnPlayer.
+	finalResult := finalResult
+		+ (board cardHandlerOf: turnPlayer) totalEffectsOnPlayer.
 	^ finalResult
 ]
 
@@ -160,8 +155,8 @@ LudoMagicGame >> quantityOfCardsInHandOf: aPlayer [
 ]
 
 { #category : #action }
-LudoMagicGame >> removeFromHand: aCard of: aPlayer [ 
-	board removeFromHand: aCard to: aPlayer.
+LudoMagicGame >> removeFromHand: aCard of: aPlayer [
+	board removeFromHand: aCard to: aPlayer
 ]
 
 { #category : #action }
@@ -172,12 +167,11 @@ LudoMagicGame >> removeToAllPlayersPermanent: aCard [
 { #category : #accessing }
 LudoMagicGame >> size [
 	^ board size
-	
 ]
 
 { #category : #accessing }
 LudoMagicGame >> throwDices [
-	^(dices collect:[ :dice | dice roll ]) sum .
+	^ (dices collect: [ :dice | dice roll ]) sum
 ]
 
 { #category : #action }
@@ -190,10 +184,9 @@ LudoMagicGame >> turn [
 ]
 
 { #category : #validation }
-LudoMagicGame >> validate: aPlayer has: aCard [.
+LudoMagicGame >> validate: aPlayer has: aCard [
 	(self has: aPlayer the: aCard)
-        ifFalse: [ self
-                error: self class cardNotInHandErrorMessage ].
+		ifFalse: [ self error: self class cardNotInHandErrorMessage ]
 ]
 
 { #category : #validation }
@@ -205,25 +198,23 @@ LudoMagicGame >> validateIfRollsAreAllowed [
 { #category : #validation }
 LudoMagicGame >> validateIsTurnOf: aPlayer [
 	(self isTurnOf: aPlayer)
-		ifFalse: [ self
-				error: self class notCurrentTurnErrorMessage  ].
+		ifFalse: [ self error: self class notCurrentTurnErrorMessage ]
 ]
 
 { #category : #validation }
 LudoMagicGame >> validateThrowOfAPermanent: aCard from: aPlayer [
 	self validateIsTurnOf: aPlayer.
-	self validate: aPlayer has: aCard.
+	self validate: aPlayer has: aCard
 ]
 
 { #category : #validation }
 LudoMagicGame >> validateThrowOfAnInstantaneous: aCard from: aPlayer [
-		self validate: aPlayer has: aCard.
+	self validate: aPlayer has: aCard
 ]
 
 { #category : #accessing }
 LudoMagicGame >> winner [
 	finished
-		ifFalse:
-			[ self error: self class noWinnerErrorMessage  ].
+		ifFalse: [ self error: self class noWinnerErrorMessage ].
 	^ board sortedPositions first player
 ]

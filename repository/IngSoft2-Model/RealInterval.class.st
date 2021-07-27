@@ -22,12 +22,12 @@ RealInterval class >> notValidLimitsErrorMessageFrom: limitOne to: limitTwo [
 ]
 
 { #category : #boolean }
-RealInterval >> includes: aNumber [ 
-	^ aNumber between: firstNumber and: secondNumber  
+RealInterval >> includes: aNumber [
+	^ aNumber between: firstNumber and: secondNumber
 ]
 
 { #category : #initialization }
 RealInterval >> initializeFrom: aFirstNumber to: aSecondNumber [
 	firstNumber := aFirstNumber.
-	secondNumber := aSecondNumber.
+	secondNumber := aSecondNumber
 ]

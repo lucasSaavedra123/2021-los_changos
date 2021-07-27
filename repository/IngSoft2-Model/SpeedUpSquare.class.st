@@ -5,6 +5,6 @@ Class {
 }
 
 { #category : #action }
-SpeedUpSquare >> makeEffectOn: aPlayer thatHasItsPositionIn: aBoard [ 
+SpeedUpSquare >> makeEffectOn: aPlayer thatHasItsPositionIn: aBoard [
 	aBoard move: aPlayer withoutEffectTo: 4
 ]

@@ -6,17 +6,16 @@ Class {
 
 { #category : #action }
 AccelerationCard >> applyTo: aTarget in: aGame [
-	aGame addToAllEffectOf:self.
+	aGame addToAllEffectOf: self
 ]
 
 { #category : #action }
 AccelerationCard >> applyTo: aTarget in: aGame from: aPlayer [
-	aGame validateThrowOfAPermanent: self  from: aPlayer.
+	aGame validateThrowOfAPermanent: self from: aPlayer.
 	self applyTo: aTarget in: aGame
-
 ]
 
 { #category : #accesing }
 AccelerationCard >> effect [
-	^ 1.
+	^ 1
 ]

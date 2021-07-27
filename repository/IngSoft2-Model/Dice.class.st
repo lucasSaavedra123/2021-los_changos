@@ -28,10 +28,10 @@ Dice class >> withFaces: numberOfFaces [.
 
 { #category : #initialize }
 Dice >> initializeWithFaces: aNumberOfFaces [
-	numberOfFaces:= aNumberOfFaces .
+	numberOfFaces := aNumberOfFaces
 ]
 
 { #category : #action }
 Dice >> roll [
-	^ Random new nextInt: (numberOfFaces).
+	^ Random new nextInt: numberOfFaces
 ]

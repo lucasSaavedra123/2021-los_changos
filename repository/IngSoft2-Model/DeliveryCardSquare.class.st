@@ -5,6 +5,6 @@ Class {
 }
 
 { #category : #action }
-DeliveryCardSquare >> makeEffectOn: aPlayer thatHasItsPositionIn: aBoard [ 
-	aBoard giveCardFromDeckTo: aPlayer.
+DeliveryCardSquare >> makeEffectOn: aPlayer thatHasItsPositionIn: aBoard [
+	aBoard giveCardFromDeckTo: aPlayer
 ]

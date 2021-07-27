@@ -5,65 +5,89 @@ Class {
 }
 
 { #category : #'exception tests' }
-BoardTest >> testABoardCannotBeCreatedWithDeckOfOneCard [
-	self assert: [ Board
+BoardTest >> testABoardCannotBeCreatedWithDeckOfOneCardIfThereAreTwoPlayers [
+	self
+		assert: [ Board
 				playedBy: {'jorge' . 'julian'}
-				with: {EffectlessSquare new.
+				with:
+					{EffectlessSquare new.
 					EffectlessSquare new.
 					EffectlessSquare new.
 					EffectlessSquare new.
 					EffectlessSquare new}
 				andCardsFrom: (Deck with: {Card new})
-				finishingAfter: 1 ] throws: (Board notValidDeckSizeErrorMessage:2)
+				finishingAfter: 1 ]
+		throws: (Board notValidDeckSizeErrorMessageWith: 2)
 ]
 
 { #category : #'exception tests' }
 BoardTest >> testABoardCannotBeCreatedWithDeckOfTenCardsIfThereAreSixPlayers [
-	self assert: [ Board
+	self
+		assert: [ Board
 				playedBy: {'jorge' . 'julian' . 'ignacio' . 'gonzalo' . 'hernan' . 'lucas'}
-				with: {EffectlessSquare new.
+				with:
+					{EffectlessSquare new.
 					EffectlessSquare new.
 					EffectlessSquare new.
 					EffectlessSquare new.
 					EffectlessSquare new}
-				andCardsFrom: (Deck with: {Card new . Card new . Card new . Card new . Card new. Card new . Card new . Card new . Card new . Card new})
-				finishingAfter: 1 ] throws: (Board notValidDeckSizeErrorMessage: 6)
+				andCardsFrom:
+					(Deck
+						with:
+							{Card new.
+							Card new.
+							Card new.
+							Card new.
+							Card new.
+							Card new.
+							Card new.
+							Card new.
+							Card new.
+							Card new})
+				finishingAfter: 1 ]
+		throws: (Board notValidDeckSizeErrorMessageWith: 6)
 ]
 
 { #category : #'exception tests' }
 BoardTest >> testABoardCannotBeCreatedWithDeckOfThreeCardsIfThereAreTwoPlayers [
-	self assert: [ Board
+	self
+		assert: [ Board
 				playedBy: {'jorge' . 'julian'}
-				with: {EffectlessSquare new.
+				with:
+					{EffectlessSquare new.
 					EffectlessSquare new.
 					EffectlessSquare new.
 					EffectlessSquare new.
 					EffectlessSquare new}
-				andCardsFrom: (Deck with: {Card new . Card new . Card new})
-				finishingAfter: 1 ] throws: (Board notValidDeckSizeErrorMessage: 2)
+				andCardsFrom:
+					(Deck
+						with:
+							{Card new.
+							Card new.
+							Card new})
+				finishingAfter: 1 ]
+		throws: (Board notValidDeckSizeErrorMessageWith: 2)
 ]
 
 { #category : #'exception tests' }
 BoardTest >> testABoardCannotBeCreatedWithFourSquaresize [
 	self
-		should: [ Board
+		assert: [ Board
 				playedBy: {'jorge' . 'julian'}
 				with:
 					{EffectlessSquare new.
 					EffectlessSquare new.
 					EffectlessSquare new.
 					EffectlessSquare new}
-				andCardsFrom: (Deck with: {Card new})
+				andCardsFrom: (Deck with: {Card new . Card new . Card new . Card new . Card new})
 				finishingAfter: 1 ]
-		raise: Error
-		withExceptionDo:
-			[ :error | self assert: error messageText equals: 'Size must be greater than 4' ]
+		throws: Board notValidNumberOfSquaresErrorMessage
 ]
 
 { #category : #'exception tests' }
 BoardTest >> testABoardCannotBeCreatedWithNumberOfLapsNegative [
 	self
-		should: [ Board
+		assert: [ Board
 				playedBy: {'julian' . 'jorge'}
 				with:
 					{EffectlessSquare new.
@@ -71,13 +95,9 @@ BoardTest >> testABoardCannotBeCreatedWithNumberOfLapsNegative [
 					EffectlessSquare new.
 					EffectlessSquare new.
 					EffectlessSquare new}
-				andCardsFrom: (Deck with: {Card new})
+				andCardsFrom: (Deck with: {Card new . Card new . Card new . Card new})
 				finishingAfter: -3 ]
-		raise: Error
-		withExceptionDo: [ :error | 
-			self
-				assert: error messageText
-				equals: 'Number of laps must be greater than 0' ]
+		throws: Board notValidNumberOfLapsErrorMessage
 ]
 
 { #category : #'exception tests' }
@@ -92,22 +112,53 @@ BoardTest >> testABoardCannotBeCreatedWithNumberOfLapsZero [
 					EffectlessSquare new.
 					EffectlessSquare new}
 				andCardsFrom: (Deck with: {Card new})
-				finishingAfter: 0 ] throws: 'Number of laps must be greater than 0'
+				finishingAfter: 0 ]
+		throws: Board notValidNumberOfLapsErrorMessage
 ]
 
 { #category : #'exception tests' }
-BoardTest >> testABoardCannotBeCreatedWithOnePlayers [
+BoardTest >> testABoardCannotBeCreatedWithOnePlayer [
 	self
 		assert: [ Board
-				playedBy: {'jorge'}
+				playedBy: {'hernan'}
 				with:
 					{EffectlessSquare new.
 					EffectlessSquare new.
 					EffectlessSquare new.
 					EffectlessSquare new.
 					EffectlessSquare new}
-				andCardsFrom: (Deck with: {Card new})
-				finishingAfter: 0 ] throws: 'There must be 2 or more players'
+				andCardsFrom:
+					(Deck
+						with:
+							{Card new.
+							Card new.
+							Card new.
+							Card new.
+							Card new.
+							Card new.
+							Card new})
+				finishingAfter: 1 ]
+		throws: Board notValidNumberOfPlayersErrorMessage
+]
+
+{ #category : #'exception tests' }
+BoardTest >> testABoardCannotBeCreatedWithTwoSquares [
+	self
+		assert: [ Board
+				playedBy: {'jorge' . 'julian'}
+				with:
+					{EffectlessSquare new.
+					EffectlessSquare new}
+				andCardsFrom:
+					(Deck
+						with:
+							{Card new.
+							Card new.
+							Card new.
+							Card new.
+							Card new})
+				finishingAfter: 1 ]
+		throws: Board notValidNumberOfSquaresErrorMessage
 ]
 
 { #category : #'exception tests' }
@@ -121,9 +172,15 @@ BoardTest >> testABoardCannotBeCreatedWithZeroPlayers [
 					EffectlessSquare new.
 					EffectlessSquare new.
 					EffectlessSquare new}
-				andCardsFrom: (Deck with: {Card new})
-				finishingAfter: 0 ]
-		throws: 'There must be 2 or more players'
+				andCardsFrom:
+					(Deck
+						with:
+							{Card new.
+							Card new.
+							Card new.
+							Card new})
+				finishingAfter: 10 ]
+		throws: Board notValidNumberOfPlayersErrorMessage
 ]
 
 { #category : #'exception tests' }
@@ -132,6 +189,22 @@ BoardTest >> testABoardCannotBeCreatedWithoutSquares [
 		assert: [ Board
 				playedBy: {'jorge' . 'julian'}
 				with: {}
-				andCardsFrom: (Deck with: {Card new})
-				finishingAfter: 1 ] throws: 'Size must be greater than 4'
+				andCardsFrom: (Deck with: {Card new . Card new . Card new . Card new . Card new . Card new})
+				finishingAfter: 1 ] throws: Board notValidNumberOfSquaresErrorMessage
+]
+
+{ #category : #'exception tests' }
+BoardTest >> testABoardCouldHaveOneLap [
+	self
+		shouldnt: [ Board
+				playedBy: {'julian' . 'jorge'}
+				with:
+					{EffectlessSquare new.
+					EffectlessSquare new.
+					EffectlessSquare new.
+					EffectlessSquare new.
+					EffectlessSquare new}
+				andCardsFrom: (Deck with: {Card new . Card new . Card new . Card new . Card new})
+				finishingAfter: 1 ]
+		raise: Error
 ]

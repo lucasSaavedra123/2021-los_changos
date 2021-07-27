@@ -7,46 +7,50 @@ Class {
 	#category : #'IngSoft2-Tests'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'error message' }
 LoadedDeck class >> noMoreCardsToPickErrorMessage [
 	^ 'No cards to pick'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 LoadedDeck class >> notValidSizeOfCardsErrorMessage [
 	^ 'It needs one or more cards'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 LoadedDeck class >> with: cards [
-	^self new initializeWith: cards.
+	
+	cards isEmpty ifTrue: [ self error: self notValidSizeOfCardsErrorMessage  ].
+
+	^ self new initializeWith: cards.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 LoadedDeck >> ifEmpty: aBlock [
 	cards ifEmpty: aBlock
 ]
 
 { #category : #initialization }
-LoadedDeck >> initializeWith: aGroupOfCards [ 
-	cards := aGroupOfCards asOrderedCollection 
+LoadedDeck >> initializeWith: aGroupOfCards [
+	cards := aGroupOfCards asOrderedCollection
 ]
 
 { #category : #boolean }
 LoadedDeck >> isEmpty [
-	^ cards isEmpty 
+	^ cards isEmpty
 ]
 
-{ #category : #action }
+{ #category : #actions }
 LoadedDeck >> pick [
 	| cardToPick |
-	
-	cardToPick := cards at: 1 ifAbsent: [ self error: self class noMoreCardsToPickErrorMessage ].
+	cardToPick := cards
+		at: 1
+		ifAbsent: [ self error: self class noMoreCardsToPickErrorMessage ].
 	cards remove: cardToPick.
 	^ cardToPick
 ]
 
-{ #category : #accessing }
+{ #category : #accesing }
 LoadedDeck >> size [
 	^ cards size
 ]

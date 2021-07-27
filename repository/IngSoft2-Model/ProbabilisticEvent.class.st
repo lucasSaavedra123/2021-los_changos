@@ -28,7 +28,6 @@ ProbabilisticEvent class >> with: aProbability for: anObject [
 
 { #category : #initialization }
 ProbabilisticEvent >> initializeWith: aProbability for: anObject [
-	
 	probability := aProbability.
 	object := anObject
 ]

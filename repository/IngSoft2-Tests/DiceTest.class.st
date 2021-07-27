@@ -6,29 +6,35 @@ Class {
 
 { #category : #'exception tests' }
 DiceTest >> testADiceCannotBeCreatedWithNumberOfFacesIsNegative [
-		self
-		should: [Dice withFaces: -6]
+	self
+		should: [ Dice withFaces: -6 ]
 		raise: Error
-		withExceptionDo: [ :error | self assert: error messageText equals: 'The number of faces must be greater than 1' ].
-	
+		withExceptionDo: [ :error | 
+			self
+				assert: error messageText
+				equals: Dice notValidNumberOfFacesErrorMessage ]
 ]
 
 { #category : #'exception tests' }
 DiceTest >> testADiceCannotBeCreatedWithNumberOfFacesIsOne [
-		self
-		should: [Dice withFaces: 1]
+	self
+		should: [ Dice withFaces: 1 ]
 		raise: Error
-		withExceptionDo: [ :error | self assert: error messageText equals: 'The number of faces must be greater than 1' ].
-	
+		withExceptionDo: [ :error | 
+			self
+				assert: error messageText
+				equals: Dice notValidNumberOfFacesErrorMessage ]
 ]
 
 { #category : #'exception tests' }
 DiceTest >> testADiceCannotBeCreatedWithNumberOfFacesIsZero [
-		self
-		should: [Dice withFaces: 0]
+	self
+		should: [ Dice withFaces: 0 ]
 		raise: Error
-		withExceptionDo: [ :error | self assert: error messageText equals: 'The number of faces must be greater than 1' ].
-	
+		withExceptionDo: [ :error | 
+			self
+				assert: error messageText
+				equals: Dice notValidNumberOfFacesErrorMessage ]
 ]
 
 { #category : #tests }

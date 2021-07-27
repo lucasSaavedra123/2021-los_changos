@@ -7,27 +7,23 @@ Class {
 { #category : #'exception tests' }
 DeckTest >> testADeckCannotBeCreatedWithoutCards [
 	self
-		should: [Deck with: {} ] 
-		raise: Error
-		withExceptionDo: [ :error | self assert: error messageText equals: 'It needs one or more cards' ].
+		assert: [ Deck with: {} ]
+		throws: Deck notValidSizeOfCardsErrorMessage
 ]
 
 { #category : #tests }
 DeckTest >> testADeckCannotThrowCardWhenItHasNoCards [
 	| aDeck |
 	aDeck := Deck
-		with: { OverloadCard new . SpeedCard new . CancellationCard . }.
-	aDeck 	pick;
-					pick;
-					pick.
-
-	self assert: [ aDeck pick ] throws: Deck noMoreCardsToPickErrorMessage
-]
-
-{ #category : #tests }
-DeckTest >> testADeckDontRepeatCard [
-	| aDeck |
-	aDeck := Deck
-		with: (Card subclasses collect: [ :aKindOfCard | aKindOfCard new ]).
-	self assert: aDeck pick ~= aDeck pick
+		with:
+			{OverloadCard new.
+			SpeedCard new.
+			CancellationCard}.
+	aDeck
+		pick;
+		pick;
+		pick.
+	self
+		assert: [ aDeck pick ]
+		throws: Deck noMoreCardsToPickErrorMessage
 ]
