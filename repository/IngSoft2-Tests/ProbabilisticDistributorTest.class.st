@@ -154,7 +154,7 @@ ProbabilisticDistributorTest >> testAProbabiliticDistributorWithFiveEventsGenera
 	self
 		assert: aProbabilisticDistributor
 		generates: (aProbabilisticDistributor generate: 1000)
-		withTolerance: 5
+		withTolerance: 10
 ]
 
 { #category : #tests }
