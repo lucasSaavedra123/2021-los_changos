@@ -1211,7 +1211,7 @@ LudoMagicGameTest >> testJulianGetsAReDoCardAfterJorgeThrewAnCancellationCardAnd
 ]
 
 { #category : #'decks behavior' }
-LudoMagicGameTest >> testJulianGetsAReDoCardAfterJorgeThrewAnCancellationCardAndPlaysIt2 [
+LudoMagicGameTest >> testJulianGetsAReDoCardAfterJorgeThrewAnCancellationCardAndPlaysItAndDeckIsShuffled [
 	| aGame squares aReDoCard aCancellationCard anOverloadCard aSpeedCard |
 	aReDoCard := ReDoCard new.
 	aCancellationCard := CancellationCard new.
@@ -1246,9 +1246,9 @@ LudoMagicGameTest >> testJulianGetsAReDoCardAfterJorgeThrewAnCancellationCardAnd
 	aGame turn.
 	aGame affect: aSpeedCard using: aCancellationCard by: jorge.
 	aGame turn.
-	aGame affect: anOverloadCard using: aReDoCard by: julian.
 	self do: 3 the: aGame.
-	self assert: aGame mainDeckSize equals: 4
+	aGame affect: anOverloadCard using: aReDoCard by: julian.
+	self assert: aGame mainDeckSize equals: 3
 ]
 
 { #category : #'card usage tests' }
